@@ -1,6 +1,6 @@
 # Game Title
 
-A short description of your game.
+Our game for gamedev.js jam 2023
 
 ## Table of Contents
 
