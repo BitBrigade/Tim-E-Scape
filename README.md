@@ -15,8 +15,8 @@ These instructions will help you get a copy of the project up and running on you
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) (version x or higher)
-- [npm](https://www.npmjs.com/) (version x or higher)
+- [Node.js](https://nodejs.org/) (version 19.8.1 or higher)
+- [npm](https://www.npmjs.com/) (version 8.19.2 or higher)
 
 ### Installing
 
