@@ -16,35 +16,34 @@ These instructions will help you get a copy of the project up and running on you
 ### Prerequisites
 
 - [Node.js](https://nodejs.org/) (version x or higher)
-- [npm](https://www.npmjs.com/)   (version x or higher)
+- [npm](https://www.npmjs.com/) (version x or higher)
 
 ### Installing
 
 1. Clone the repository to your local machine:
-```git clone https://github.com/username/repo-name.git```
+
+```bash
+git clone https://github.com/BitBrigade/gamedevjs-2023
+```
 
 2. Install the required dependencies:
-```bash 
-npm install
+
+```bash
+npm install && npm i -g http-server
 ```
 
 ### Running the Game
 
 1. Start the local development server:
+
 ```bash
-npm start
+# inside the folder where you cloned the repository
+http-server ./
 ```
 
-2. Open your web browser and navigate to `http://localhost:3000`
+2. Open your web browser and navigate to `http://localhost:8081`
 
 3. You should now see the game's game.html page displayed in your browser.
-
-### Building for Production
-
-To build a production-ready version, you can run the following command:
-```bash
-npm run build
-```
 
 ## Built With
 
