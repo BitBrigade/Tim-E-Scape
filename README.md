@@ -54,7 +54,7 @@ npm run build
 
 ## Authors
 
-- Suthar Amit - [github.com/amitsuthar69](https://github.com/amitsuthar69)
+- Amit - [github.com/amitsuthar69](https://github.com/amitsuthar69)
 - Harshil - [github.com/Harshil-08](https://github.com/Harshil-08)
 - Rishabh - [github.com/Rishabh672003](https://github.com/Rishabh672003)
 - Sumit - [github.com/sumitst05](https://github.com/sumitst05)
