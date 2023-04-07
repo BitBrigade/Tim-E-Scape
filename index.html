@@ -1,46 +1,42 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="UTF-8">
-	<title>My Phaser Game</title>
-	<!-- Include Phaser.js library -->
-	<script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
-</head>
-<body>
-	<!-- Game Container -->
-	<div id="game-container"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <title>My Phaser Game</title>
+    <!-- Include Phaser.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
+  </head>
+  <body>
+    <!-- Game Container -->
+    <div id="game-container"></div>
 
-	<!-- Script tag for game logic -->
-	<script>
-		// Initialize Phaser game
-		var config = {
-			type: Phaser.AUTO,
-			width: 800,
-			height: 600,
-			scene: {
-				preload: preload,
-				create: create,
-				update: update
-			}
-		};
+    <!-- Script tag for game logic -->
+    <script>
+      // Initialize Phaser game
+      var config = {
+        type: Phaser.AUTO,
+        width: 800,
+        height: 600,
+        scene: {
+          preload: preload,
+          create: create,
+          update: update,
+        },
+      }
 
-		var game = new Phaser.Game(config);
+      var game = new Phaser.Game(config)
 
-		function preload ()
-		{
-			// Load game assets (images, sounds, wagera)
-		}
+      function preload() {
+        // Load game assets (images, sounds, wagera)
+      }
 
-		function create ()
-		{
-			// Set up game objects and initial state
-		}
+      function create() {
+        // Set up game objects and initial state
+      }
 
-		function update ()
-		{
-			// Update game state in each frame
-		}
-	</script>
-</body>
+      function update() {
+        // Update game state in each frame
+      }
+    </script>
+  </body>
 </html>
-
