@@ -57,6 +57,8 @@
         platforms.create(750, 220, 'ground')
 
         player = this.physics.add.sprite(100, 450, 'dude') // creates sprite
+        this.physics.add.collider(player, platforms);   // checks collision with platforms
+
         /*
           The sprite was created via the Physics Game Object Factory (this.physics.add) which means it has a Dynamic Physics body by default.
         */
@@ -71,6 +73,7 @@
           The 'left' animation uses frames 0, 1, 2 and 3 and runs at 10 frames per second. The 'repeat -1' value tells the animation to loop.
           The 'right' animation uses frames 5, 6, 7 and 8
         */
+        
         this.anims.create({
           key: 'left',
           frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
