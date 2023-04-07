@@ -1,4 +1,4 @@
-# Game Title
+# Game Title (To be decided)
 
 Our game for gamedev.js jam 2023
 
