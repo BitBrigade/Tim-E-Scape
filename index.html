@@ -96,7 +96,9 @@
           frameRate: 10,
           repeat: -1,
         })
+
         cursors = this.input.keyboard.createCursorKeys()
+
         //star
         stars = this.physics.add.group({
           key: 'star',
@@ -107,8 +109,10 @@
         stars.children.iterate(function (child) {
           child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8))
         })
+
         this.physics.add.collider(stars, platforms) //for stars
         this.physics.add.overlap(player, stars, collectStar, null, this)
+
         //scores
         scoreText = this.add.text(16, 16, 'score: 0', {
           fontSize: '32px',
@@ -120,6 +124,7 @@
         this.physics.add.collider(bombs, platforms)
         this.physics.add.collider(player, bombs, hitBomb, null, this)
       }
+
       //collect stars
       function collectStar(player, star) {
         star.disableBody(true, true)
@@ -141,6 +146,7 @@
           bomb.setVelocity(Phaser.Math.Between(-200, 200), 20)
         }
       }
+
       function hitBomb(player, bomb) {
         this.physics.pause()
 
@@ -167,7 +173,6 @@
         if (cursors.up.isDown && player.body.touching.down) {
           player.setVelocityY(-330)
         }
-        // add game logic here
       }
     </script>
   </body>
