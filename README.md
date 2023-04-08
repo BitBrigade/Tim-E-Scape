@@ -5,6 +5,7 @@ Our game for gamedev.js jam 2023
 ## Table of Contents
 
 - [Getting Started](#getting-started)
+- [Running the Game](#running-the-game)
 - [Built With](#built-with)
 - [Authors](#authors)
 - [License](#license)
@@ -12,6 +13,7 @@ Our game for gamedev.js jam 2023
 ## Getting Started
 
 These instructions will help you get a copy of the project up and running on your local machine for development and testing purposes.
+If you do not want to build from source you can skip to [Running the Game](#running-the-game)
 
 ### Prerequisites
 
@@ -34,16 +36,26 @@ npm install && npm i -g http-server
 
 ### Running the Game
 
-1. Start the local development server:
+- Without Building:
+
+  You can play the game online by visiting the following link:
 
 ```bash
-# inside the folder where you cloned the repository
-http-server ./
+https://bitbrigade.github.io/gamedevjs-2023/
 ```
 
-2. Open your web browser and navigate to `http://localhost:8081`
+- Building from source:
 
-3. You should now see the game's game.html page displayed in your browser.
+  - Start the local development server:
+
+  ```bash
+  # inside the folder where you cloned the repository
+  http-server ./
+  ```
+
+  - Open your web browser and navigate to `http://localhost:8081` (replace 8081 with whatever port number you get)
+
+  - You should now see the game's index.html page displayed in your browser.
 
 ## Built With
 
