@@ -15,6 +15,14 @@ Our game for gamedev.js jam 2023
 These instructions will help you get a copy of the project up and running on your local machine for development and testing purposes.
 If you do not want to build from source you can skip to [Running the Game](#running-the-game)
 
+## Play the game (Still damn WIP)
+
+You can play the game online by visiting the following link:
+
+```bash
+https://bitbrigade.github.io/gamedevjs-2023/
+```
+
 ### Prerequisites
 
 - [Node.js](https://nodejs.org/) (version 19.8.1 or higher)
@@ -35,14 +43,6 @@ npm install && npm i -g http-server
 ```
 
 ### Running the Game
-
-- Without Building:
-
-  You can play the game online by visiting the following link:
-
-```bash
-https://bitbrigade.github.io/gamedevjs-2023/
-```
 
 - Building from source:
 
