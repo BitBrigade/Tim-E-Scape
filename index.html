@@ -27,52 +27,24 @@
 
       var game = new Phaser.Game(config)
 
-      // scene functions:
-
-      // loads assets
       function preload() {
-        this.load.image('water', 'assets/water.png')
-        this.load.image('tower', 'assets/tower.png')
-        // spritesheet
-        this.load.spritesheet('rings', 'assets/rings.png', {
-          frameWidth: 64,
-          frameHeight: 64,
-        })
+        this.load.image('background', 'assets/background.png')
+        this.load.image('blob', 'assets/blob.png')
+        this.load.image('laser_blue_vert', 'assets/laser_blue_vert.png')
+        this.load.image('laser_blue_horiz', 'assets/laser_blue_horiz.png')
+        this.load.image('laser_violet_vert', 'assets/laser_violet_vert.png')
+        this.load.image('laser_violet_horiz', 'assets/laser_violet_horiz.png')
+        this.load.image('mine', 'assets/mine.png')
       }
-
-      var tower
-      var rings
-      var cursors
 
       // draws stuff
       function create() {
-        this.add.image(400, 300, 'water')
-
-        tower = this.physics.add.staticGroup() // static group of objects are immovable
-
-        tower.create(400, 500, 'tower').setScale(2).refreshBody()
-
-        rings = this.physics.add.sprite(100, 450, 'rings') // creates sprite
-        this.physics.add.collider(rings, tower) // checks collision with platforms
-
-        /*
-          The sprite was created via the Physics Game Object Factory (this.physics.add) which means it has a Dynamic Physics body by default.
-        */
-
-        // self explanatory stuff
-        rings.setBounce(0.2)
-        rings.setCollideWorldBounds(true)
-
-        cursors = this.input.keyboard.createCursorKeys()
+        this.add.image(400, 300, 'background')
       }
 
       // update game state
       function update() {
-        this.physics.add.overlap(rings, tower, collectRing, null, this)
-      }
-
-      function collectRing(rings, tower) {
-        rings.disableBody(true, true)
+        
       }
     </script>
   </body>
