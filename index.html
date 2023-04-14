@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8">
     <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"></script>
   </head>
   <body>
@@ -111,7 +112,19 @@
         })
 
         // Mine
+        this.mines = this.physics.add.group()
 
+        const mine1 = this.mines.create(50, 450, 'mine')
+        mine1.setImmovable(false)
+        mine1.setCollideWorldBounds(true)
+        mine1.setBounce(1)
+        mine1.setScale(1)
+
+        const mine2 = this.mines.create(50, 130, 'mine')
+        mine2.setImmovable(false)
+        mine2.setCollideWorldBounds(true)
+        mine2.setBounce(1)
+        mine2.setScale(1)
         // Timer Bar
       }
 
@@ -136,6 +149,10 @@
             this.player.setVelocityY(0)
           }
         }
+
+        this.mines.getChildren()[0].setVelocityX(200);
+        this.mines.getChildren()[1].setVelocityX(150);
+
       }
     </script>
   </body>
