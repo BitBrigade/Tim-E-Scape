@@ -77,12 +77,25 @@
           this.player.active = false // set player to inactive so it doesn't move anymore
           this.player.setPosition(this.portal.x, this.portal.y)
           this.player.setScale(0.5) // set the scale of the blob to half of its original size
-          this.time.delayedCall(250, () => { this.player.setVisible(false); });
+          this.time.delayedCall(250, () => {
+            this.player.setVisible(false)
+          })
         })
+
+        // Lasers
+        this.lasers = this.physics.add.staticGroup()
+        this.lasers.create(600, 250, 'laser_blue_vert').setScale(2)
+        this.lasers.create(50, 240, 'laser_blue_horiz').setScale(0.5)
+        this.lasers.create(350, 300, 'laser_violet_vert').setScale(2)
+        this.lasers.create(220, 500, 'laser_violet_horiz').setScale(2)
+        this.lasers.create(480, 500, 'laser_blue_horiz').setScale(2)
+        this.lasers.create(100, 250, 'laser_violet_vert').setScale(2)
+        this.lasers.create(650, 240, 'laser_violet_horiz').setScale(0.5)
+        this.lasers.create(350, 100, 'laser_blue_horiz').setScale(2)
       }
 
       function update() {
-        // Player Movements 
+        // Player Movements
         const cursors = this.input.keyboard.createCursorKeys()
 
         if (this.player.active) {
@@ -103,13 +116,13 @@
           }
         }
 
-        // Collide the player with the portal and trigger the animation when they overlap
+        // collide the player with the portal and trigger the animation when they overlap
         this.physics.add.overlap(this.player, this.portal, () => {
-          if (!this.player.anims.isPlaying && this.player.active) {
+          if (!this.player.anims.isplaying && this.player.active) {
             // added condition to check if animation is not currently playing and player is active
-            this.player.setVelocity(0)
+            this.player.setvelocity(0)
             this.player.anims.play('portal-enter', true)
-            this.player.setScale(0.5) // set the scale of the blob to half of its original size
+            this.player.setscale(0.5) // set the scale of the blob to half of its original size
             delete this.player.active // remove the active property to prevent reactivation
           }
         })
