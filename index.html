@@ -8,7 +8,7 @@
       // Game config
       var config = {
         type: Phaser.AUTO, // sets type automatically to WEBGL; falls back to CANVAS if WEBGL is not supported
-        width: 800,
+        width: 700,
         height: 600,
 
         // Game physics
@@ -35,17 +35,48 @@
         this.load.image('laser_violet_vert', 'assets/laser_violet_vert.png')
         this.load.image('laser_violet_horiz', 'assets/laser_violet_horiz.png')
         this.load.image('mine', 'assets/mine.png')
+        this.load.image('portal', 'assets/portal.png')
       }
 
       // draws stuff
       function create() {
-        this.add.image(400, 300, 'background')
+        this.add.image(350, 300, 'background').setScale(1.6, 1.325)
+        this.add.image(350, 50, 'portal')
+
+        // Create the player sprite
+        this.player = this.physics.add.sprite(350, 550, 'blob')
+
+        // Set the player's drag to control its movement
+        this.player.setDrag(1000)
+
+        // Set world bounds to the dimensions of the background image
+        this.physics.world.setBounds(8, 8, 692.5, 592.5)
+
+        // Set player body to collide with the world bounds
+        this.player.setCollideWorldBounds(true)
       }
 
       // update game state
       function update() {
-        
+        // Move player with arrow keys
+        const cursors = this.input.keyboard.createCursorKeys()
+        if (cursors.left.isDown) {
+          this.player.setVelocityX(-200)
+        } else if (cursors.right.isDown) {
+          this.player.setVelocityX(200)
+        } else {
+          this.player.setVelocityX(0)
+        }
+
+        if (cursors.up.isDown) {
+          this.player.setVelocityY(-200)
+        } else if (cursors.down.isDown) {
+          this.player.setVelocityY(200)
+        } else {
+          this.player.setVelocityY(0)
+        }
       }
     </script>
   </body>
 </html>
+
