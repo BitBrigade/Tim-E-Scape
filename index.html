@@ -15,7 +15,7 @@
         physics: {
           default: 'arcade', // physics system
           arcade: {
-            gravity: { y: 300 },
+            //gravity: { y: 300 },
           },
         },
         scene: {
@@ -29,19 +29,35 @@
 
       function preload() {
         this.load.image('background', 'assets/background.png')
-        this.load.image('blob', 'assets/blob.png')
+        this.load.spritesheet('blob', 'assets/blob.png', {
+          frameWidth: 24,
+          frameHeight: 24,
+        })
+        this.load.image('portal', 'assets/portal.png')
         this.load.image('laser_blue_vert', 'assets/laser_blue_vert.png')
         this.load.image('laser_blue_horiz', 'assets/laser_blue_horiz.png')
         this.load.image('laser_violet_vert', 'assets/laser_violet_vert.png')
         this.load.image('laser_violet_horiz', 'assets/laser_violet_horiz.png')
         this.load.image('mine', 'assets/mine.png')
-        this.load.image('portal', 'assets/portal.png')
       }
 
-      // draws stuff
       function create() {
+        // Add the background image
         this.add.image(350, 300, 'background').setScale(1.6, 1.325)
-        this.add.image(350, 50, 'portal')
+
+        // Add the portal image
+        this.portal = this.physics.add
+          .image(350, 50, 'portal')
+          .setImmovable(true)
+          .setOrigin(0.5)
+
+        // Create an invisible sprite that matches the size and position of the portal image
+        this.portalCollider = this.physics.add
+          .sprite(350, 50, null)
+          .setImmovable(true)
+          .setVisible(false)
+        this.portalCollider.setSize(this.portal.width, this.portal.height)
+        this.portalCollider.setPosition(this.portal.x, this.portal.y)
 
         // Create the player sprite
         this.player = this.physics.add.sprite(350, 550, 'blob')
@@ -54,29 +70,63 @@
 
         // Set player body to collide with the world bounds
         this.player.setCollideWorldBounds(true)
+
+        // Add a collider for the portal image
+        this.physics.add.collider(this.player, this.portalCollider, () => {
+          this.player.setVelocity(0)
+          this.player.active = false // set player to inactive so it doesn't move anymore
+          this.player.setPosition(this.portal.x, this.portal.y)
+          this.player.setScale(0.5) // set the scale of the blob to half of its original size
+          this.time.delayedCall(250, () => {
+            this.player.setVisible(false)
+          })
+        })
+
+        // Lasers
+        this.lasers = this.physics.add.staticGroup()
+        this.lasers.create(600, 250, 'laser_blue_vert').setScale(2)
+        this.lasers.create(50, 240, 'laser_blue_horiz').setScale(0.5)
+        this.lasers.create(350, 300, 'laser_violet_vert').setScale(2)
+        this.lasers.create(220, 500, 'laser_violet_horiz').setScale(2)
+        this.lasers.create(480, 500, 'laser_blue_horiz').setScale(2)
+        this.lasers.create(100, 250, 'laser_violet_vert').setScale(2)
+        this.lasers.create(650, 240, 'laser_violet_horiz').setScale(0.5)
+        this.lasers.create(350, 100, 'laser_blue_horiz').setScale(2)
       }
 
-      // update game state
       function update() {
-        // Move player with arrow keys
+        // Player Movements
         const cursors = this.input.keyboard.createCursorKeys()
-        if (cursors.left.isDown) {
-          this.player.setVelocityX(-200)
-        } else if (cursors.right.isDown) {
-          this.player.setVelocityX(200)
-        } else {
-          this.player.setVelocityX(0)
+
+        if (this.player.active) {
+          if (cursors.left.isDown) {
+            this.player.setVelocityX(-200)
+          } else if (cursors.right.isDown) {
+            this.player.setVelocityX(200)
+          } else {
+            this.player.setVelocityX(0)
+          }
+
+          if (cursors.up.isDown) {
+            this.player.setVelocityY(-200)
+          } else if (cursors.down.isDown) {
+            this.player.setVelocityY(200)
+          } else {
+            this.player.setVelocityY(0)
+          }
         }
 
-        if (cursors.up.isDown) {
-          this.player.setVelocityY(-200)
-        } else if (cursors.down.isDown) {
-          this.player.setVelocityY(200)
-        } else {
-          this.player.setVelocityY(0)
-        }
+        // collide the player with the portal and trigger the animation when they overlap
+        this.physics.add.overlap(this.player, this.portal, () => {
+          if (!this.player.anims.isplaying && this.player.active) {
+            // added condition to check if animation is not currently playing and player is active
+            this.player.setvelocity(0)
+            this.player.anims.play('portal-enter', true)
+            this.player.setscale(0.5) // set the scale of the blob to half of its original size
+            delete this.player.active // remove the active property to prevent reactivation
+          }
+        })
       }
     </script>
   </body>
 </html>
-
