@@ -110,6 +110,71 @@
         this.scene.restart()
       })
 
+    //   // Add a timer event to change the laser color to red every 3 seconds
+    //   this.time.addEvent(
+    //   {
+    //   delay: 2000,
+    //   loop: true,
+    //   callback: () => 
+    //   {
+    //     // Get all the laser sprites
+    //     const lasers = this.lasers.getChildren();
+
+    //     // Loop through each laser sprite
+    //     lasers.forEach((laser) => 
+    //     {
+    //       // Store the original tint color of the laser sprite
+    //       if (!laser.originalTint) 
+    //       {
+    //         laser.originalTint = laser.tint;
+    //       }
+
+    //      // Change the tint color of the laser sprite to red
+    //       laser.setTint(0xff0000);
+    //     });
+
+    //     // Add another timer event to change the laser color back to its original color after 3 seconds
+    //     this.time.addEvent(
+    //       {
+    //         delay: 2000,
+    //         callback: () => 
+    //         {
+    //           // Loop through each laser sprite
+    //           lasers.forEach((laser) => 
+    //           {
+    //             // Change the tint color of the laser sprite back to its original color
+    //             laser.setTint(laser.originalTint);
+    //           });
+    //        },
+    //       });
+    //   },
+    // });
+
+    // Add a timer event to blink the laser color red every 3 seconds
+this.time.addEvent({
+  delay: 800,
+  loop: true,
+  callback: () => {
+    // Get all the laser sprites
+    const lasers = this.lasers.getChildren()
+
+    // Loop through each laser sprite and change its tint color to red
+    lasers.forEach((laser) => {
+      laser.setTint(0xff0000)
+    })
+
+    // Add a short delay before changing the tint color back to the original
+    this.time.delayedCall(200, () => {
+      // Loop through each laser sprite and change its tint color back to the original
+      lasers.forEach((laser) => {
+        laser.clearTint()
+      })
+    })
+  }
+})
+
+
+
       // Create bombs
       this.bombs = this.physics.add.staticGroup()
       this.bomb1 = this.bombs.create(75, 300, 'bomb')
