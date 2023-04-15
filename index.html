@@ -41,6 +41,11 @@
         this.load.image('explosion', 'assets/explosion.png')
       }
 
+      let isTimeStopped = true
+      let spaceBar = this.input.keyboard.addKey(
+        Phaser.Input.Keyboard.KeyCodes.SPACE
+      )
+
       function create() {
         // Add the background image
         this.add.image(350, 300, 'background').setScale(1.6, 1.325)
@@ -106,6 +111,7 @@
 
         this.physics.add.collider(this.player, this.lasers, () => {
           window.alert('Game Over')
+          this.spacePressed = false
           this.scene.restart()
         })
 
@@ -160,6 +166,30 @@
           }
         )
 
+        // Time stop duration bar
+        this.bar = this.add.graphics()
+        this.bar.fillStyle(0x39ff14, 1)
+        this.bar.fillRect(0, 0, 200, 20)
+        this.bar.x = 10
+        this.bar.y = 10
+
+        this.abilityDurationText = this.add
+          .text(10, 10, 'Ability Duration', {
+            fontSize: '20px',
+            fill: '#000',
+          })
+          .setFontStyle('bold')
+
+        // Instructions
+        this.instructionText = this.add
+          .text(350, 300, 'Press SPACE to stop time!', {
+            fontSize: '32px',
+            fill: '#9d00ff',
+            align: 'center',
+          })
+          .setFontStyle('bold')
+        this.instructionText.setOrigin(0.5)
+
         // Create explosion sprite
         this.explosion1 = this.add.image(
           this.bomb1.x,
@@ -180,30 +210,34 @@
         this.explosion1.setVisible(false)
         this.explosion2.setVisible(false)
 
-        // explosion
+        // Explosion
         this.timer = this.time.addEvent({
           delay: 1000, // in ms
           callback: () => {
-            this.timeLeft--
-            this.timerText.setText(`Bomb Timer 💣: ${this.timeLeft}`)
+            if (!this.timer.paused) {
+              this.timeLeft--
+              this.timerText.setText(`Bomb Timer 💣: ${this.timeLeft}`)
 
-            if (this.timeLeft === 0) {
-              this.bomb1.destroy()
-              this.bomb2.destroy()
-              this.timer.destroy()
+              if (this.timeLeft === 0) {
+                this.bomb1.destroy()
+                this.bomb2.destroy()
+                this.timer.destroy()
 
-              // Show the explosion sprite
-              this.explosion1.setVisible(true)
-              this.explosion2.setVisible(true)
+                // Show the explosion sprite
+                this.explosion1.setVisible(true)
+                this.explosion2.setVisible(true)
 
-              // Trigger the alert after the explosion animation finishes
-              this.time.delayedCall(2, () => {
-                window.alert('Game Over')
-                this.scene.restart()
-              })
+                // Trigger the alert after the explosion animation finishes
+                this.time.delayedCall(2, () => {
+                  window.alert('Game Over')
+                  this.spacePressed = false
+                  this.scene.restart()
+                })
+              }
             }
           },
           loop: true,
+          paused: true, // pause the timer by default
         })
       }
 
@@ -211,7 +245,7 @@
         // Player Movements
         const cursors = this.input.keyboard.createCursorKeys()
 
-        if (this.player.active) {
+        if (this.player.active && this.spacePressed) {
           if (cursors.left.isDown) {
             this.player.setVelocityX(-200)
           } else if (cursors.right.isDown) {
@@ -227,6 +261,21 @@
           } else {
             this.player.setVelocityY(0)
           }
+        }
+        // Check if space bar is pressed
+        if (
+          this.input.keyboard.checkDown(
+            this.input.keyboard.addKey('SPACE'),
+            500
+          )
+        ) {
+          this.spacePressed = true
+
+          // Hide the instructions
+          this.instructionText.setVisible(false)
+
+          // Resume the bomb timer
+          this.timer.paused = false
         }
       }
     </script>
