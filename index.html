@@ -38,7 +38,7 @@
         this.load.image('laser_blue_horiz', 'assets/laser_blue_horiz.png')
         this.load.image('laser_violet_vert', 'assets/laser_violet_vert.png')
         this.load.image('laser_violet_horiz', 'assets/laser_violet_horiz.png')
-        this.load.image('mine', 'assets/mine.png')
+        this.load.image('bomb', 'assets/bomb.png')
       }
 
       function create() {
@@ -91,7 +91,7 @@
 
         this.lasers.create(150, 250, 'laser_violet_vert')
         this.lasers.create(75, 240, 'laser_blue_horiz')
-        
+
         this.lasers.create(350, 300, 'laser_violet_vert')
 
         this.lasers.create(240, 500, 'laser_violet_horiz')
@@ -110,7 +110,20 @@
           this.scene.restart()
         })
 
-        // Mine
+        // Create bombs
+        this.bombs = this.physics.add.staticGroup()
+        this.bomb1 = this.bombs.create(75, 300, 'bomb')
+        this.bomb2 = this.bombs.create(625, 300, 'bomb')
+
+        // Make bombs blink
+        this.tweens.add({
+          targets: [this.bomb1, this.bomb2],
+          alpha: 0,
+          ease: 'Linear',
+          duration: 500,
+          repeat: -1,
+          yoyo: true,
+        })
 
         // Timer Bar
       }
