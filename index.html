@@ -1,155 +1,205 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"></script>
-  </head>
-  <body>
-    <script>
-      // Game config
-      var config = {
-        type: Phaser.AUTO, // sets type automatically to WEBGL; falls back to CANVAS if WEBGL is not supported
-        width: 700,
-        height: 600,
 
-        // Game physics
-        physics: {
-          default: 'arcade', // physics system
-          arcade: {
-            //gravity: { y: 300 },
-          },
-        },
-        scene: {
-          preload: preload,
-          create: create,
-          update: update,
-        },
-      }
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"></script>
+</head>
 
-      var game = new Phaser.Game(config)
+<body>
+  <script>
+    // Game config
+    var config = {
+      type: Phaser.AUTO, // sets type automatically to WEBGL; falls back to CANVAS if WEBGL is not supported
+      width: 700,
+      height: 600,
 
-      function preload() {
-        this.load.image('background', 'assets/background.png')
-        this.load.spritesheet('blob', 'assets/blob.png', {
-          frameWidth: 24,
-          frameHeight: 24,
+      // Game physics
+      physics: {
+        default: 'arcade', // physics system
+        arcade: {},
+      },
+      scene: {
+        preload: preload,
+        create: create,
+        update: update,
+      },
+    }
+
+    var game = new Phaser.Game(config)
+
+    function preload() {
+      this.load.image('background', 'assets/background.png')
+      this.load.spritesheet('blob', 'assets/blob.png', {
+        frameWidth: 24,
+        frameHeight: 24,
+      })
+      this.load.image('portal', 'assets/portal.png')
+      this.load.image('laser_blue_vert', 'assets/laser_blue_vert.png')
+      this.load.image('laser_blue_horiz', 'assets/laser_blue_horiz.png')
+      this.load.image('laser_violet_vert', 'assets/laser_violet_vert.png')
+      this.load.image('laser_violet_horiz', 'assets/laser_violet_horiz.png')
+      this.load.image('bomb', 'assets/bomb.png')
+      this.load.image('explosion', 'assets/explosion.png')
+    }
+
+    function create() {
+      // Add the background image
+      this.add.image(350, 300, 'background').setScale(1.6, 1.325)
+
+      // Add the portal image
+      this.portal = this.physics.add
+        .image(350, 50, 'portal')
+        .setImmovable(true)
+        .setOrigin(0.5)
+
+      // Create an invisible sprite that matches the size and position of the portal image
+      this.portalCollider = this.physics.add
+        .sprite(350, 50, null)
+        .setImmovable(true)
+        .setVisible(false)
+      this.portalCollider.setSize(this.portal.width, this.portal.height)
+      this.portalCollider.setPosition(this.portal.x, this.portal.y)
+
+      // Create the player sprite
+      this.player = this.physics.add.sprite(350, 550, 'blob')
+
+      // Set the player's drag to control its movement
+      this.player.setDrag(1000)
+
+      // Set world bounds to the dimensions of the background image
+      this.physics.world.setBounds(8, 8, 682, 582)
+
+      // Set player body to collide with the world bounds
+      this.player.setCollideWorldBounds(true)
+
+      // Add a collider for the portal image
+      this.physics.add.collider(this.player, this.portalCollider, () => {
+        this.player.setVelocity(0)
+        this.player.active = false // set player to inactive so it doesn't move anymore
+        this.player.setPosition(this.portal.x, this.portal.y)
+        this.player.setScale(0.5) // set the scale of the blob to half of its original size
+        this.time.delayedCall(250, () => {
+          this.player.setVisible(false)
         })
-        this.load.image('portal', 'assets/portal.png')
-        this.load.image('laser_blue_vert', 'assets/laser_blue_vert.png')
-        this.load.image('laser_blue_horiz', 'assets/laser_blue_horiz.png')
-        this.load.image('laser_violet_vert', 'assets/laser_violet_vert.png')
-        this.load.image('laser_violet_horiz', 'assets/laser_violet_horiz.png')
-        this.load.image('bomb', 'assets/bomb.png')
-      }
+      })
 
-      function create() {
-        // Add the background image
-        this.add.image(350, 300, 'background').setScale(1.6, 1.325)
+      // Lasers
+      this.lasers = this.physics.add.staticGroup()
+      this.lasers.create(550, 250, 'laser_blue_vert')
+      this.lasers.create(625, 240, 'laser_violet_horiz')
 
-        // Add the portal image
-        this.portal = this.physics.add
-          .image(350, 50, 'portal')
-          .setImmovable(true)
-          .setOrigin(0.5)
+      this.lasers.create(485, 175, 'laser_blue_horiz')
 
-        // Create an invisible sprite that matches the size and position of the portal image
-        this.portalCollider = this.physics.add
-          .sprite(350, 50, null)
-          .setImmovable(true)
-          .setVisible(false)
-        this.portalCollider.setSize(this.portal.width, this.portal.height)
-        this.portalCollider.setPosition(this.portal.x, this.portal.y)
+      this.lasers.create(150, 250, 'laser_violet_vert')
+      this.lasers.create(75, 240, 'laser_blue_horiz')
 
-        // Create the player sprite
-        this.player = this.physics.add.sprite(350, 550, 'blob')
+      this.lasers.create(350, 300, 'laser_violet_vert')
 
-        // Set the player's drag to control its movement
-        this.player.setDrag(1000)
+      this.lasers.create(240, 500, 'laser_violet_horiz')
+      this.lasers.create(460, 500, 'laser_blue_horiz')
 
-        // Set world bounds to the dimensions of the background image
-        this.physics.world.setBounds(8, 8, 682, 582)
+      this.lasers.create(350, 100, 'laser_blue_horiz')
 
-        // Set player body to collide with the world bounds
-        this.player.setCollideWorldBounds(true)
+      this.lasers.create(215, 175, 'laser_blue_horiz')
 
-        // Add a collider for the portal image
-        this.physics.add.collider(this.player, this.portalCollider, () => {
-          this.player.setVelocity(0)
-          this.player.active = false // set player to inactive so it doesn't move anymore
-          this.player.setPosition(this.portal.x, this.portal.y)
-          this.player.setScale(0.5) // set the scale of the blob to half of its original size
-          this.time.delayedCall(250, () => {
-            this.player.setVisible(false)
-          })
-        })
+      this.lasers.create(285, 375, 'laser_blue_horiz')
+      this.lasers.create(415, 375, 'laser_violet_horiz')
 
-        // Lasers
-        this.lasers = this.physics.add.staticGroup()
-        this.lasers.create(550, 250, 'laser_blue_vert')
-        this.lasers.create(625, 240, 'laser_violet_horiz')
+      this.physics.add.collider(this.player, this.lasers, () => {
+        window.alert('Game Over')
+        this.scene.restart()
+      })
 
-        this.lasers.create(485, 175, 'laser_blue_horiz')
+      // Create bombs
+      this.bombs = this.physics.add.staticGroup()
+      this.bomb1 = this.bombs.create(75, 300, 'bomb')
+      this.bomb2 = this.bombs.create(625, 300, 'bomb')
 
-        this.lasers.create(150, 250, 'laser_violet_vert')
-        this.lasers.create(75, 240, 'laser_blue_horiz')
+      // Make bombs blink
+      this.tweens.add({
+        targets: [this.bomb1, this.bomb2],
+        alpha: 0,
+        ease: 'Linear',
+        duration: 500,
+        repeat: -1,
+        yoyo: true,
+      })
 
-        this.lasers.create(350, 300, 'laser_violet_vert')
+      // Bomb timer
+      const timeLimit = 3 // in seconds
+      this.timeLeft = timeLimit
+      this.timerText = this.add.text(
+        450,
+        10,
+        `Bomb Timer 💣: ${this.timeLeft}`,
+        {
+          fontSize: '24px',
+          fill: '#fff',
+        }
+      )
 
-        this.lasers.create(240, 500, 'laser_violet_horiz')
-        this.lasers.create(460, 500, 'laser_blue_horiz')
+      // Create explosion sprite
+      this.explosion1 = this.add.image(this.bomb1.x, this.bomb1.y, 'explosion')
+      this.explosion2 = this.add.image(this.bomb2.x, this.bomb2.y, 'explosion')
 
-        this.lasers.create(350, 100, 'laser_blue_horiz')
+      // Set the anchor point to the center of the sprite
+      this.explosion1.setOrigin(0.5)
+      this.explosion2.setOrigin(0.5)
 
-        this.lasers.create(215, 175, 'laser_blue_horiz')
+      // Hide the sprite initially
+      this.explosion1.setVisible(false)
+      this.explosion2.setVisible(false)
 
-        this.lasers.create(285, 375, 'laser_blue_horiz')
-        this.lasers.create(415, 375, 'laser_violet_horiz')
+      // explosion
+      this.timer = this.time.addEvent({
+        delay: 1000, // in ms
+        callback: () => {
+          this.timeLeft--
+          this.timerText.setText(`Bomb Timer 💣: ${this.timeLeft}`)
 
-        this.physics.add.collider(this.player, this.lasers, () => {
-          // Game over logic here
-          window.alert('Game Over')
-          this.scene.restart()
-        })
+          if (this.timeLeft === 0) {
+            this.bomb1.destroy()
+            this.bomb2.destroy()
+            this.timer.destroy()
 
-        // Create bombs
-        this.bombs = this.physics.add.staticGroup()
-        this.bomb1 = this.bombs.create(75, 300, 'bomb')
-        this.bomb2 = this.bombs.create(625, 300, 'bomb')
+            // Show the explosion sprite
+            this.explosion1.setVisible(true)
+            this.explosion2.setVisible(true)
 
-        // Make bombs blink
-        this.tweens.add({
-          targets: [this.bomb1, this.bomb2],
-          alpha: 0,
-          ease: 'Linear',
-          duration: 500,
-          repeat: -1,
-          yoyo: true,
-        })
-
-        // Timer Bar
-      }
-
-      function update() {
-        // Player Movements
-        const cursors = this.input.keyboard.createCursorKeys()
-
-        if (this.player.active) {
-          if (cursors.left.isDown) {
-            this.player.setVelocityX(-200)
-          } else if (cursors.right.isDown) {
-            this.player.setVelocityX(200)
-          } else {
-            this.player.setVelocityX(0)
+            // Trigger the alert after the explosion animation finishes
+            this.time.delayedCall(2, () => {
+              window.alert('Game Over')
+              this.scene.restart()
+            })
           }
+        },
+        loop: true,
+      })
+    }
 
-          if (cursors.up.isDown) {
-            this.player.setVelocityY(-200)
-          } else if (cursors.down.isDown) {
-            this.player.setVelocityY(200)
-          } else {
-            this.player.setVelocityY(0)
-          }
+    function update() {
+      // Player Movements
+      const cursors = this.input.keyboard.createCursorKeys()
+
+      if (this.player.active) {
+        if (cursors.left.isDown) {
+          this.player.setVelocityX(-200)
+        } else if (cursors.right.isDown) {
+          this.player.setVelocityX(200)
+        } else {
+          this.player.setVelocityX(0)
+        }
+
+        if (cursors.up.isDown) {
+          this.player.setVelocityY(-200)
+        } else if (cursors.down.isDown) {
+          this.player.setVelocityY(200)
+        } else {
+          this.player.setVelocityY(0)
         }
       }
-    </script>
-  </body>
+    }
+  </script>
+</body>
+
 </html>
