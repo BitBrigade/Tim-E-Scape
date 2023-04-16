@@ -167,12 +167,12 @@
         )
 
         // Time stop duration bar
+        this.barFillAmount = 1
         this.bar = this.add.graphics()
         this.bar.fillStyle(0x39ff14, 1)
-        this.bar.fillRect(0, 0, 200, 20)
+        this.bar.fillRect(0, 0, this.barFillAmount * 200, 20)
         this.bar.x = 10
         this.bar.y = 10
-
         this.abilityDurationText = this.add
           .text(10, 10, 'Ability Duration', {
             fontSize: '20px',
@@ -230,7 +230,7 @@
                 // Trigger the alert after the explosion animation finishes
                 this.time.delayedCall(2, () => {
                   window.alert('Game Over')
-                  this.spacePressed = false
+                  this.spacePressed = true
                   this.scene.restart()
                 })
               }
@@ -263,6 +263,7 @@
           }
         }
         // Check if space bar is pressed
+        var barFillAmount = 1
         if (
           this.input.keyboard.checkDown(
             this.input.keyboard.addKey('SPACE'),
@@ -274,9 +275,25 @@
           // Hide the instructions
           this.instructionText.setVisible(false)
 
-          // Resume the bomb timer
-          this.timer.paused = false
+          // Pause the bomb timer
+          this.timer.paused = true
         }
+
+        // Decrease the bar fill amount if space bar is pressed
+        if (this.spacePressed) {
+          this.barFillAmount -= 0.005
+          this.bar.clear()
+          this.bar.fillStyle(0x39ff14, 1)
+          this.bar.fillRect(0, 0, this.barFillAmount * 200, 20)
+
+          // Check if the bar is empty
+          if (this.barFillAmount <= 0) {
+            // Start the bomb timer
+            this.timer.paused = false
+            this.barFillAmount = 0
+          }
+        }
+
       }
     </script>
   </body>
