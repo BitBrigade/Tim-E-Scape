@@ -1,6 +1,7 @@
-# Game Title (To be decided)
+# ⏳ Tim-E-Scape ⌛ 
 
-Our game for gamedev.js jam 2023
+Our game for gamedev.js jam 2023 <br>
+*(Theme : TIME)*
 
 ## Table of Contents
 
@@ -20,7 +21,7 @@ If you do not want to build from source you can skip to [Running the Game](#runn
 - [Node.js](https://nodejs.org/) (version 19.8.1 or higher)
 - [npm](https://www.npmjs.com/) (version 8.19.2 or higher)
 
-### Installing
+### Installing (Build from source)
 
 1. Clone the repository to your local machine:
 
@@ -34,7 +35,7 @@ git clone https://github.com/BitBrigade/gamedevjs-2023
 npm install && npm i -g http-server
 ```
 
-### Running the Game
+### Running the Game (Play wihtout Build)
 
 - Without Building:
 
@@ -49,7 +50,7 @@ https://bitbrigade.github.io/gamedevjs-2023/
   - Start the local development server:
 
   ```bash
-  # inside the folder where you cloned the repository
+  # inside the cloned repository (Tim-E-Scape)
   http-server ./
   ```
 
