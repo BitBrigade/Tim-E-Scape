@@ -153,42 +153,21 @@
           yoyo: true,
         })
 
-        // Bomb timer
-        const timeLimit = 3 // in seconds
-        this.timeLeft = timeLimit
-        this.timerText = this.add.text(
-          450,
-          10,
-          `Bomb Timer 💣: ${this.timeLeft}`,
-          {
-            fontSize: '24px',
-            fill: '#fff',
-          }
-        )
-
-        // Time stop duration bar
-        this.barFillAmount = 1
-        this.bar = this.add.graphics()
-        this.bar.fillStyle(0x39ff14, 1)
-        this.bar.fillRect(0, 0, this.barFillAmount * 200, 20)
-        this.bar.x = 10
-        this.bar.y = 10
-        this.abilityDurationText = this.add
-          .text(10, 10, 'Ability Duration', {
-            fontSize: '20px',
-            fill: '#000',
-          })
-          .setFontStyle('bold')
-
         // Instructions
-        this.instructionText = this.add
-          .text(350, 300, 'Press SPACE to stop time!', {
+        this.instructionText1 = this.add
+          .text(85, 125,'Help Blob to get out of the maze using the portal\n beore timer runs out...', {
+            fontSize: '18px',
+            fill: '#a6E3A1',
+            align: 'center',
+        })
+        this.instructionText2 = this.add
+          .text(350, 300, 'Press SPACE to start the game!', {
             fontSize: '32px',
             fill: '#9d00ff',
             align: 'center',
           })
           .setFontStyle('bold')
-        this.instructionText.setOrigin(0.5)
+          this.instructionText2.setOrigin(0.5)
 
         // Create explosion sprite
         this.explosion1 = this.add.image(
@@ -210,34 +189,40 @@
         this.explosion1.setVisible(false)
         this.explosion2.setVisible(false)
 
+        // Time bar
+        this.barFillAmount = 1
+        this.bar = this.add.graphics()
+        this.bar.fillStyle(0x39ff14, 1)
+        this.bar.fillRect(0, 0, this.barFillAmount * 200, 20)
+        this.bar.x = 10
+        this.bar.y = 10
+        this.abilityDurationText = this.add
+          .text(10, 10, '💣 Time Left 💣', {
+            fontSize: '20px',
+            fill: '#000',
+          })
+          .setFontStyle('bold')
+
         // Explosion
         this.timer = this.time.addEvent({
           delay: 1000, // in ms
           callback: () => {
-            if (!this.timer.paused) {
-              this.timeLeft--
-              this.timerText.setText(`Bomb Timer 💣: ${this.timeLeft}`)
+            this.bomb1.destroy()
+            this.bomb2.destroy()
 
-              if (this.timeLeft === 0) {
-                this.bomb1.destroy()
-                this.bomb2.destroy()
-                this.timer.destroy()
+            // Show the explosion sprite
+            this.explosion1.setVisible(true)
+            this.explosion2.setVisible(true)
 
-                // Show the explosion sprite
-                this.explosion1.setVisible(true)
-                this.explosion2.setVisible(true)
-
-                // Trigger the alert after the explosion animation finishes
-                this.time.delayedCall(2, () => {
-                  window.alert('Game Over')
-                  this.spacePressed = false
-                  this.scene.restart()
-                })
-              }
-            }
+            // Trigger the alert after the explosion animation finishes
+            this.time.delayedCall(2, () => {
+              window.alert('Game Over')
+              this.spacePressed = false
+              this.scene.restart()
+            })
           },
           loop: true,
-          paused: true, // pause the timer by default
+          paused: true,
         })
       }
 
@@ -273,7 +258,8 @@
           this.spacePressed = true
 
           // Hide the instructions
-          this.instructionText.setVisible(false)
+          this.instructionText1.setVisible(false)
+          this.instructionText2.setVisible(false)
 
           // Pause the bomb timer
           this.timer.paused = true
@@ -293,7 +279,6 @@
             this.barFillAmount = 0
           }
         }
-
       }
     </script>
   </body>
