@@ -230,7 +230,7 @@
                 // Trigger the alert after the explosion animation finishes
                 this.time.delayedCall(2, () => {
                   window.alert('Game Over')
-                  this.spacePressed = true
+                  this.spacePressed = false
                   this.scene.restart()
                 })
               }
