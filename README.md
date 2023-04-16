@@ -42,7 +42,7 @@ npm install && npm i -g http-server
   You can play the game online by visiting the following link:
 
 ```bash
-https://bitbrigade.github.io/gamedevjs-2023/
+https://bitbrigade.github.io/Tim-E-Scape/
 ```
 
 - Building from source:
