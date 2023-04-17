@@ -56,6 +56,9 @@ class Level1 extends Phaser.Scene {
       this.player.setScale(0.5) // set the scale of the blob to half of its original size
       this.time.delayedCall(250, () => {
         this.player.setVisible(false)
+        this.spacePressed = false
+        window.alert('Level Cleared')
+        this.scene.restart()
       })
     })
 
@@ -129,7 +132,7 @@ class Level1 extends Phaser.Scene {
     this.instructionText1 = this.add.text(
       85,
       125,
-      'Help Blob to get out of the maze using the portal\n beore timer runs out...',
+      'Help Blob to get out of the maze using the portal\n before timer runs out...',
       {
         fontSize: '18px',
         fill: '#a6E3A1',
@@ -158,16 +161,25 @@ class Level1 extends Phaser.Scene {
     this.explosion2.setVisible(false)
 
     // Time bar
-    this.barFillAmount = 1
+    this.timeLimit = 70
+    this.timer = this.time.addEvent({
+      delay: 1000,
+      callback: this.updateTimer,
+      callbackScope: this,
+      loop: true,
+    })
+    this.timeLimit--
+    this.barFillAmount = this.timeLimit / 60
     this.bar = this.add.graphics()
     this.bar.fillStyle(0x39ff14, 1)
     this.bar.fillRect(0, 0, this.barFillAmount * 200, 20)
     this.bar.x = 10
     this.bar.y = 10
     this.abilityDurationText = this.add
-      .text(10, 10, '💣 Time Left 💣', {
+      .text(this.bar.x + 23, this.bar.y, '💣 Time Left 💣', {
         fontSize: '20px',
-        fill: '#000',
+        fill: '#fd1c03',
+        align: 'center',
       })
       .setFontStyle('bold')
 
@@ -217,7 +229,7 @@ class Level1 extends Phaser.Scene {
     }
 
     // Check if space bar is pressed
-    var barFillAmount = 1
+    //var barFillAmount = 1
     if (
       this.input.keyboard.checkDown(this.input.keyboard.addKey('SPACE'), 500)
     ) {
