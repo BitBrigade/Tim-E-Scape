@@ -1,6 +1,6 @@
-class Level1 extends Phaser.Scene {
+class Level2 extends Phaser.Scene {
   constructor() {
-    super({ key: 'Level1' })
+    super({ key: 'Level2' })
   }
 
   preload() {
@@ -24,7 +24,7 @@ class Level1 extends Phaser.Scene {
 
     // Add the portal image
     this.portal = this.physics.add
-      .image(350, 50, 'portal')
+      .image(350, 550, 'portal')
       .setImmovable(true)
       .setOrigin(0.5)
 
@@ -37,7 +37,7 @@ class Level1 extends Phaser.Scene {
     this.portalCollider.setPosition(this.portal.x, this.portal.y)
 
     // Create the player sprite
-    this.player = this.physics.add.sprite(350, 550, 'blob')
+    this.player = this.physics.add.sprite(350, 50, 'blob')
 
     // Set the player's drag to control its movement
     this.player.setDrag(1000)
@@ -57,8 +57,8 @@ class Level1 extends Phaser.Scene {
       this.time.delayedCall(250, () => {
         this.player.setVisible(false)
         this.spacePressed = false
-        window.alert('Level Cleared!!\nPress OK to move to next level')
-        this.scene.start('Level2')
+        window.alert('Level Cleared')
+        this.scene.restart()
       })
     })
 
@@ -129,24 +129,14 @@ class Level1 extends Phaser.Scene {
     })
 
     // Instructions
-    this.instructionText1 = this.add.text(
-      85,
-      125,
-      'Help Blob to get out of the maze using the portal\n before timer runs out...',
-      {
-        fontSize: '18px',
-        fill: '#a6E3A1',
-        align: 'center',
-      }
-    )
-    this.instructionText2 = this.add
-      .text(350, 300, 'Press SPACE to play!\n LEVEL - 1', {
+    this.instructionText = this.add
+      .text(350, 300, 'Press SPACE to start the game!', {
         fontSize: '32px',
         fill: '#9d00ff',
         align: 'center',
       })
       .setFontStyle('bold')
-    this.instructionText2.setOrigin(0.5)
+    this.instructionText.setOrigin(0.5)
 
     // Create explosion sprite
     this.explosion1 = this.add.image(this.bomb1.x, this.bomb1.y, 'explosion')
@@ -236,9 +226,8 @@ class Level1 extends Phaser.Scene {
       this.spacePressed = true
 
       // Hide the instructions
-      this.instructionText1.setVisible(false)
-      this.instructionText2.setVisible(false)
-
+      this.instructionText.setVisible(false)
+      
       // Pause the bomb timer
       this.timer.paused = true
     }
@@ -260,4 +249,4 @@ class Level1 extends Phaser.Scene {
   }
 }
 
-this.game.scene.add('Level1', Level1, true)
+this.game.scene.add('Level2', Level2, true)
