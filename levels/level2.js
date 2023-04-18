@@ -24,7 +24,7 @@ class Level2 extends Phaser.Scene {
 
     // Add the portal image
     this.portal = this.physics.add
-      .image(350, 550, 'portal')
+      .image(50, 50, 'portal')
       .setImmovable(true)
       .setOrigin(0.5)
 
@@ -37,7 +37,7 @@ class Level2 extends Phaser.Scene {
     this.portalCollider.setPosition(this.portal.x, this.portal.y)
 
     // Create the player sprite
-    this.player = this.physics.add.sprite(350, 50, 'blob')
+    this.player = this.physics.add.sprite(600, 550, 'blob')
 
     // Set the player's drag to control its movement
     this.player.setDrag(1000)
@@ -64,30 +64,93 @@ class Level2 extends Phaser.Scene {
 
     // Lasers
     this.lasers = this.physics.add.staticGroup()
-    this.lasers.create(550, 250, 'laser_blue_vert')
-    this.lasers.create(625, 240, 'laser_violet_horiz')
+    this.lasers.create(150, 80, 'laser_violet_vert')
+    this.lasers.create(215, 155, 'laser_blue_horiz')
 
-    this.lasers.create(485, 175, 'laser_blue_horiz')
+    this.lasers.create(150, 302, 'laser_blue_vert')
+    this.lasers.create(215, 227, 'laser_violet_horiz')
+    this.lasers.create(215, 377, 'laser_violet_horiz')
 
-    this.lasers.create(150, 250, 'laser_violet_vert')
-    this.lasers.create(75, 240, 'laser_blue_horiz')
+    this.lasers.create(150, 525, 'laser_violet_vert')
+    this.lasers.create(215, 450, 'laser_violet_horiz')
 
-    this.lasers.create(350, 300, 'laser_violet_vert')
+    this.movingLaser1 = this.physics.add.sprite(140, 80, 'laser_violet_vert')
 
-    this.lasers.create(240, 500, 'laser_violet_horiz')
-    this.lasers.create(460, 500, 'laser_blue_horiz')
+    this.lasers.create(385, 80, 'laser_blue_horiz')
+    this.lasers.create(385, 302, 'laser_violet_horiz')
+    this.lasers.create(385, 525, 'laser_blue_horiz')
 
-    this.lasers.create(350, 100, 'laser_blue_horiz')
+    this.lasers.create(522, 525, 'laser_violet_vert')
 
-    this.lasers.create(215, 175, 'laser_blue_horiz')
+    this.movingLaser2 = this.physics.add.sprite(605, 80, 'laser_violet_horiz')
 
-    this.lasers.create(285, 375, 'laser_blue_horiz')
-    this.lasers.create(415, 375, 'laser_violet_horiz')
+    // Moving lasers 1 & 2
+    this.laserTween = this.tweens.add({
+      targets: [this.movingLaser1, this.movingLaser2],
+      y: 525,
+      duration: 2000,
+      ease: 'Linear',
+      yoyo: true,
+      repeat: -1,
+    })
 
+    // Set up a collider for the moving laser 1 and the player
+    this.physics.add.collider(this.player, this.movingLaser1, () => {
+      window.alert('Game Over')
+      this.spacePressed = false
+      this.scene.restart()
+    })
+
+    // Set up a collider for the moving laser 2 and the player
+    this.physics.add.collider(this.player, this.movingLaser2, () => {
+      window.alert('Game Over')
+      this.spacePressed = false
+      this.scene.restart()
+    })
+
+    // Set up a collider for other (static) lasers ans player
     this.physics.add.collider(this.player, this.lasers, () => {
       window.alert('Game Over')
       this.spacePressed = false
       this.scene.restart()
+    })
+
+    // Add a timer event to blink the moving laser 1's color red every 3 seconds
+    this.time.addEvent({
+      delay: 800,
+      loop: true,
+      callback: () => {
+        // Check if the moving laser sprite exists
+        if (this.movingLaser1) {
+          // Change its tint color to red
+          this.movingLaser1.setTint(0xff0000)
+
+          // Add a short delay before changing the tint color back to the original
+          this.time.delayedCall(500, () => {
+            // Change the tint color back to the original
+            this.movingLaser1.clearTint()
+          })
+        }
+      },
+    })
+
+    // Add a timer event to blink the moving laser 2's color red every 3 seconds
+    this.time.addEvent({
+      delay: 800,
+      loop: true,
+      callback: () => {
+        // Check if the moving laser sprite exists
+        if (this.movingLaser2) {
+          // Change its tint color to red
+          this.movingLaser2.setTint(0xff0000)
+
+          // Add a short delay before changing the tint color back to the original
+          this.time.delayedCall(500, () => {
+            // Change the tint color back to the original
+            this.movingLaser2.clearTint()
+          })
+        }
+      },
     })
 
     // Add a timer event to blink the laser color red every 3 seconds
@@ -115,12 +178,13 @@ class Level2 extends Phaser.Scene {
 
     // Create bombs
     this.bombs = this.physics.add.staticGroup()
-    this.bomb1 = this.bombs.create(75, 300, 'bomb')
-    this.bomb2 = this.bombs.create(625, 300, 'bomb')
+    this.bomb1 = this.bombs.create(220, 80, 'bomb')
+    this.bomb2 = this.bombs.create(220, 300, 'bomb')
+    this.bomb3 = this.bombs.create(220, 525, 'bomb')
 
     // Make bombs blink
     this.tweens.add({
-      targets: [this.bomb1, this.bomb2],
+      targets: [this.bomb1, this.bomb2, this.bomb3],
       alpha: 0,
       ease: 'Linear',
       duration: 500,
@@ -141,17 +205,20 @@ class Level2 extends Phaser.Scene {
     // Create explosion sprite
     this.explosion1 = this.add.image(this.bomb1.x, this.bomb1.y, 'explosion')
     this.explosion2 = this.add.image(this.bomb2.x, this.bomb2.y, 'explosion')
+    this.explosion3 = this.add.image(this.bomb3.x, this.bomb3.y, 'explosion')
 
     // Set the anchor point to the center of the sprite
     this.explosion1.setOrigin(0.5)
     this.explosion2.setOrigin(0.5)
+    this.explosion3.setOrigin(0.5)
 
     // Hide the sprite initially
     this.explosion1.setVisible(false)
     this.explosion2.setVisible(false)
+    this.explosion3.setVisible(false)
 
     // Time bar
-    this.timeLimit = 70
+    this.timeLimit = 90
     this.timer = this.time.addEvent({
       delay: 1000,
       callback: this.updateTimer,
@@ -166,7 +233,7 @@ class Level2 extends Phaser.Scene {
     this.bar.x = 10
     this.bar.y = 10
     this.abilityDurationText = this.add
-      .text(this.bar.x + 23, this.bar.y, '💣 Time Left 💣', {
+      .text(this.bar.x + 46, this.bar.y, '💣 Time Left 💣', {
         fontSize: '20px',
         fill: '#fd1c03',
         align: 'center',
@@ -179,10 +246,12 @@ class Level2 extends Phaser.Scene {
       callback: () => {
         this.bomb1.destroy()
         this.bomb2.destroy()
+        this.bomb3.destroy()
 
         // Show the explosion sprite
         this.explosion1.setVisible(true)
         this.explosion2.setVisible(true)
+        this.explosion3.setVisible(true)
 
         // Trigger the alert after the explosion animation finishes
         this.time.delayedCall(2, () => {
@@ -219,15 +288,12 @@ class Level2 extends Phaser.Scene {
     }
 
     // Check if space bar is pressed
-    //var barFillAmount = 1
-    if (
-      this.input.keyboard.checkDown(this.input.keyboard.addKey('SPACE'), 500)
-    ) {
+    if (this.input.keyboard.checkDown(this.input.keyboard.addKey('SPACE'), 500)) {
       this.spacePressed = true
 
       // Hide the instructions
       this.instructionText.setVisible(false)
-      
+
       // Pause the bomb timer
       this.timer.paused = true
     }
