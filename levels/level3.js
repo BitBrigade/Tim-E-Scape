@@ -57,8 +57,8 @@ class Level3 extends Phaser.Scene {
         this.time.delayedCall(250, () => {
           this.player.setVisible(false)
           this.spacePressed = false
-          window.alert('Level Cleared')
-          this.scene.restart()
+          window.alert('Level Cleared!!\nPress OK to move to next level')
+          this.scene.start('Level4')
         })
       })
   
@@ -327,7 +327,7 @@ class Level3 extends Phaser.Scene {
   
       // Decrease the bar fill amount if space bar is pressed
       if (this.spacePressed) {
-        this.barFillAmount -= 0.005
+        this.barFillAmount -= 0.0015
         this.bar.clear()
         this.bar.fillStyle(0x39ff14, 1)
         this.bar.fillRect(0, 0, this.barFillAmount * 200, 20)
