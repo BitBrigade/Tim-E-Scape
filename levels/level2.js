@@ -62,8 +62,8 @@ class Level2 extends Phaser.Scene {
       this.time.delayedCall(250, () => {
         this.player.setVisible(false)
         this.spacePressed = false
-        window.alert('Level Cleared')
-        this.scene.restart()
+        window.alert('Level Cleared!!\nPress OK to move to next level')
+        this.scene.start('Level3')
       })
     })
 
