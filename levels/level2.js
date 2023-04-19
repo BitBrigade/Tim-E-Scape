@@ -16,6 +16,11 @@ class Level2 extends Phaser.Scene {
     this.load.image('laser_violet_horiz', 'assets/laser_violet_horiz.png')
     this.load.image('bomb', 'assets/bomb.png')
     this.load.image('explosion', 'assets/explosion.png')
+    this.load.image('explosion', 'assets/explosion.png')
+    this.load.spritesheet('coins', 'assets/coins.png', {
+      frameWidth: 192,
+      frameHeight: 171,
+    })
   }
 
   create() {
@@ -24,7 +29,7 @@ class Level2 extends Phaser.Scene {
 
     // Add the portal image
     this.portal = this.physics.add
-      .image(50, 50, 'portal')
+      .image(75, 50, 'portal')
       .setImmovable(true)
       .setOrigin(0.5)
 
@@ -62,6 +67,81 @@ class Level2 extends Phaser.Scene {
       })
     })
 
+    // Add animations for the coin sprite
+    this.anims.create({
+      key: 'spin',
+      frames: this.anims.generateFrameNumbers('coins', { start: 0, end: 5 }),
+      frameRate: 10,
+      repeat: -1,
+    })
+
+    // Create a group for the coins
+    const coinsGroup = this.physics.add.group()
+
+    // Add coins to the group
+    for (let i = 0; i < 7; i++) {
+      const coin = this.add.sprite(i * 50 + 180, 190, 'coins')
+      coin.setScale(0.15)
+      coinsGroup.add(coin)
+    }
+   
+    for (let i = 0; i < 5; i++) {
+      const coin = this.add.sprite(523, i * 50 + 200, 'coins')
+      coin.setScale(0.15)
+      coinsGroup.add(coin)
+    }
+
+    for (let i = 0; i < 7; i++) {
+      const coin = this.add.sprite(i * 50 + 180, 415, 'coins')
+      coin.setScale(0.15)
+      coinsGroup.add(coin)
+    }
+
+    for (let i = 0; i < 9; i++) {
+      const coin = this.add.sprite(600, i * 50 + 100, 'coins')
+      coin.setScale(0.15)
+      coinsGroup.add(coin)
+    }
+
+    for (let i = 0; i < 10; i++) {
+      const coin = this.add.sprite(75, i * 50 + 100, 'coins')
+      coin.setScale(0.15)
+      coinsGroup.add(coin)
+    }
+
+    // Play the animation on all the coins
+    coinsGroup.playAnimation('spin')
+
+    // Create a text object to display the score
+    this.scoreText = this.add.text(500, 20, 'Score: ' + score, {
+      fontSize: '32px',
+      fill: '#fff',
+    })
+    this.scoreText.setDepth(1)
+
+    // Add collider between the player and coins group
+    this.physics.add.overlap(this.player, coinsGroup, (player, coin) => {
+      // Calculate distance between player and coin
+      const distance = Phaser.Math.Distance.Between(
+        player.x,
+        player.y,
+        coin.x,
+        coin.y
+      )
+
+      // Only remove coin if it's close enough to the player
+      if (distance < 50) {
+        // Remove the coin from the game
+        coin.destroy()
+
+        // Update the score
+        score += 10
+        this.scoreText.setText('Score: ' + score)
+      }
+    })
+    // Store the score in local storage
+    localStorage.setItem('score', score)
+
     // Lasers
     this.lasers = this.physics.add.staticGroup()
     this.lasers.create(150, 80, 'laser_violet_vert')
@@ -81,6 +161,8 @@ class Level2 extends Phaser.Scene {
     this.lasers.create(385, 525, 'laser_blue_horiz')
 
     this.lasers.create(522, 525, 'laser_violet_vert')
+
+    this.lasers.create(522, 75, 'laser_violet_vert')
 
     this.movingLaser2 = this.physics.add.sprite(605, 80, 'laser_violet_horiz')
 
@@ -218,7 +300,7 @@ class Level2 extends Phaser.Scene {
     this.explosion3.setVisible(false)
 
     // Time bar
-    this.timeLimit = 90
+    this.timeLimit = 70
     this.timer = this.time.addEvent({
       delay: 1000,
       callback: this.updateTimer,
@@ -233,7 +315,7 @@ class Level2 extends Phaser.Scene {
     this.bar.x = 10
     this.bar.y = 10
     this.abilityDurationText = this.add
-      .text(this.bar.x + 46, this.bar.y, '💣 Time Left 💣', {
+      .text(this.bar.x + 23, this.bar.y, '💣 Time Left 💣', {
         fontSize: '20px',
         fill: '#fd1c03',
         align: 'center',
@@ -300,7 +382,7 @@ class Level2 extends Phaser.Scene {
 
     // Decrease the bar fill amount if space bar is pressed
     if (this.spacePressed) {
-      this.barFillAmount -= 0.005
+      this.barFillAmount -= 0.0015
       this.bar.clear()
       this.bar.fillStyle(0x39ff14, 1)
       this.bar.fillRect(0, 0, this.barFillAmount * 200, 20)

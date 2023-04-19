@@ -1,3 +1,5 @@
+let score = 0
+
 class Level1 extends Phaser.Scene {
   constructor() {
     super({ key: 'Level1' })
@@ -16,6 +18,10 @@ class Level1 extends Phaser.Scene {
     this.load.image('laser_violet_horiz', 'assets/laser_violet_horiz.png')
     this.load.image('bomb', 'assets/bomb.png')
     this.load.image('explosion', 'assets/explosion.png')
+    this.load.spritesheet('coins', 'assets/coins.png', {
+      frameWidth: 192,
+      frameHeight: 171,
+    })
   }
 
   create() {
@@ -61,6 +67,92 @@ class Level1 extends Phaser.Scene {
         this.scene.start('Level2')
       })
     })
+
+    // Add animations for the coin sprite
+    this.anims.create({
+      key: 'spin',
+      frames: this.anims.generateFrameNumbers('coins', { start: 0, end: 5 }),
+      frameRate: 10,
+      repeat: -1,
+    })
+
+    // Create a group for the coins
+    const coinsGroup = this.physics.add.group()
+
+    // Add coins to the group
+    for (let i = 0; i < 4; i++) {
+      const coin = this.add.sprite(i * 50 + 272, 135, 'coins')
+      coin.setScale(0.15)
+      coinsGroup.add(coin)
+    }
+
+    for (let i = 0; i < 7; i++) {
+      const coin = this.add.sprite(i * 50 + 200, 440, 'coins')
+      coin.setScale(0.15)
+      coinsGroup.add(coin)
+    }
+
+    for (let i = 0; i < 7; i++) {
+      const coin = this.add.sprite(i * 50 + 200, 200, 'coins')
+      coin.setScale(0.15)
+      coinsGroup.add(coin)
+    }
+
+    for (let i = 0; i < 4; i++) {
+      const coin = this.add.sprite(185, i * 50 + 244, 'coins')
+      coin.setScale(0.15)
+      coinsGroup.add(coin)
+    }
+
+    for (let i = 0; i < 4; i++) {
+      const coin = this.add.sprite(520, i * 50 + 244, 'coins')
+      coin.setScale(0.15)
+      coinsGroup.add(coin)
+    }
+
+    for (let i = 0; i < 4; i++) {
+      const coin = this.add.sprite(i * 50 + 400, 550, 'coins')
+      coin.setScale(0.15)
+      coinsGroup.add(coin)
+    }
+
+    for (let i = 0; i < 4; i++) {
+      const coin = this.add.sprite(i * 50 + 150, 550, 'coins')
+      coin.setScale(0.15)
+      coinsGroup.add(coin)
+    }
+
+    // Play the animation on all the coins
+    coinsGroup.playAnimation('spin')
+
+    // Create a text object to display the score
+    this.scoreText = this.add.text(500, 20, 'Score: ' + score, {
+      fontSize: '32px',
+      fill: '#fff',
+    })
+
+    // Add collider between the player and coins group
+    this.physics.add.overlap(this.player, coinsGroup, (player, coin) => {
+      // Calculate distance between player and coin
+      const distance = Phaser.Math.Distance.Between(
+        player.x,
+        player.y,
+        coin.x,
+        coin.y
+      )
+
+      // Only remove coin if it's close enough to the player
+      if (distance < 50) {
+        // Remove the coin from the game
+        coin.destroy()
+
+        // Update the score
+        score += 10
+        this.scoreText.setText('Score: ' + score)
+      }
+    })
+    // Store the score in local storage
+    localStorage.setItem('score', score)
 
     // Lasers
     this.lasers = this.physics.add.staticGroup()
@@ -131,8 +223,8 @@ class Level1 extends Phaser.Scene {
     // Instructions
     this.instructionText1 = this.add.text(
       85,
-      125,
-      'Help Blob to get out of the maze using the portal\n before timer runs out...',
+      110,
+      'Help Blob to get out of the maze using the portal\n before the bomb timer runs out.\nCollect as many coins as possible...',
       {
         fontSize: '18px',
         fill: '#a6E3A1',
@@ -229,7 +321,6 @@ class Level1 extends Phaser.Scene {
     }
 
     // Check if space bar is pressed
-    //var barFillAmount = 1
     if (
       this.input.keyboard.checkDown(this.input.keyboard.addKey('SPACE'), 500)
     ) {
@@ -245,7 +336,7 @@ class Level1 extends Phaser.Scene {
 
     // Decrease the bar fill amount if space bar is pressed
     if (this.spacePressed) {
-      this.barFillAmount -= 0.005
+      this.barFillAmount -= 0.0015
       this.bar.clear()
       this.bar.fillStyle(0x39ff14, 1)
       this.bar.fillRect(0, 0, this.barFillAmount * 200, 20)
