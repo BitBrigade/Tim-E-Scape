@@ -1,10 +1,7 @@
-let score = 0
-
-class Level1 extends Phaser.Scene {
+class Level4 extends Phaser.Scene {
   constructor() {
-    super({ key: 'Level1' })
+    super({ key: 'Level4' })
   }
-
   preload() {
     this.load.image('background', 'assets/background.png')
     this.load.spritesheet('blob', 'assets/blob.png', {
@@ -30,7 +27,7 @@ class Level1 extends Phaser.Scene {
 
     // Add the portal image
     this.portal = this.physics.add
-      .image(350, 50, 'portal')
+      .image(630, 550, 'portal')
       .setImmovable(true)
       .setOrigin(0.5)
 
@@ -43,7 +40,7 @@ class Level1 extends Phaser.Scene {
     this.portalCollider.setPosition(this.portal.x, this.portal.y)
 
     // Create the player sprite
-    this.player = this.physics.add.sprite(350, 550, 'blob')
+    this.player = this.physics.add.sprite(73, 50, 'blob')
 
     // Set the player's drag to control its movement
     this.player.setDrag(1000)
@@ -64,7 +61,7 @@ class Level1 extends Phaser.Scene {
         this.player.setVisible(false)
         this.spacePressed = false
         window.alert('Level Cleared!!\nPress OK to move to next level')
-        this.scene.start('Level2')
+        this.scene.start('Level3')
       })
     })
 
@@ -80,44 +77,80 @@ class Level1 extends Phaser.Scene {
     const coinsGroup = this.physics.add.group()
 
     // Add coins to the group
+    for (let i = 0; i < 3; i++) {
+      const coin = this.add.sprite(i * 50 + 110, 185, 'coins')
+      coin.setScale(0.15)
+      coinsGroup.add(coin)
+    }
+
+    for (let i = 0; i < 5; i++) {
+      const coin = this.add.sprite(245, i * 50 + 190, 'coins')
+      coin.setScale(0.15)
+      coinsGroup.add(coin)
+    }
+
+    for (let i = 0; i < 3; i++) {
+      const coin = this.add.sprite(i * 50 + 110, 395, 'coins')
+      coin.setScale(0.15)
+      coinsGroup.add(coin)
+    }
+
+    for (let i = 0; i < 3; i++) {
+      const coin = this.add.sprite(i * 50 + 327, 65, 'coins')
+      coin.setScale(0.15)
+      coinsGroup.add(coin)
+    }
+
+    for (let i = 0; i < 3; i++) {
+      const coin = this.add.sprite(i * 50 + 575, 65, 'coins')
+      coin.setScale(0.15)
+      coinsGroup.add(coin)
+    }
+
+    for (let i = 0; i < 3; i++) {
+      const coin = this.add.sprite(i * 50 + 575, 355, 'coins')
+      coin.setScale(0.15)
+      coinsGroup.add(coin)
+    }
+
+    for (let i = 0; i < 3; i++) {
+      const coin = this.add.sprite(i * 50 + 280, 485, 'coins')
+      coin.setScale(0.15)
+      coinsGroup.add(coin)
+    }
+
+    for (let i = 0; i < 3; i++) {
+      const coin = this.add.sprite(i * 50 + 425, 435, 'coins')
+      coin.setScale(0.15)
+      coinsGroup.add(coin)
+    }
+
+    for (let i = 0; i < 3; i++) {
+      const coin = this.add.sprite(i * 50 + 425, 175, 'coins')
+      coin.setScale(0.15)
+      coinsGroup.add(coin)
+    }
+
     for (let i = 0; i < 4; i++) {
-      const coin = this.add.sprite(i * 50 + 272, 135, 'coins')
+      const coin = this.add.sprite(625, i * 50 + 135, 'coins')
+      coin.setScale(0.15)
+      coinsGroup.add(coin)
+    }
+
+    for (let i = 0; i < 4; i++) {
+      const coin = this.add.sprite(75, i * 50 + 125, 'coins')
+      coin.setScale(0.15)
+      coinsGroup.add(coin)
+    }
+
+    for (let i = 0; i < 4; i++) {
+      const coin = this.add.sprite(75, i * 50 + 325, 'coins')
       coin.setScale(0.15)
       coinsGroup.add(coin)
     }
 
     for (let i = 0; i < 7; i++) {
-      const coin = this.add.sprite(i * 50 + 200, 440, 'coins')
-      coin.setScale(0.15)
-      coinsGroup.add(coin)
-    }
-
-    for (let i = 0; i < 7; i++) {
-      const coin = this.add.sprite(i * 50 + 200, 200, 'coins')
-      coin.setScale(0.15)
-      coinsGroup.add(coin)
-    }
-
-    for (let i = 0; i < 4; i++) {
-      const coin = this.add.sprite(185, i * 50 + 244, 'coins')
-      coin.setScale(0.15)
-      coinsGroup.add(coin)
-    }
-
-    for (let i = 0; i < 4; i++) {
-      const coin = this.add.sprite(520, i * 50 + 244, 'coins')
-      coin.setScale(0.15)
-      coinsGroup.add(coin)
-    }
-
-    for (let i = 0; i < 4; i++) {
-      const coin = this.add.sprite(i * 50 + 400, 550, 'coins')
-      coin.setScale(0.15)
-      coinsGroup.add(coin)
-    }
-
-    for (let i = 0; i < 4; i++) {
-      const coin = this.add.sprite(i * 50 + 150, 550, 'coins')
+      const coin = this.add.sprite(350, i * 50 + 135, 'coins')
       coin.setScale(0.15)
       coinsGroup.add(coin)
     }
@@ -130,6 +163,7 @@ class Level1 extends Phaser.Scene {
       fontSize: '32px',
       fill: '#fff',
     })
+    this.scoreText.setDepth(1)
 
     // Add collider between the player and coins group
     this.physics.add.overlap(this.player, coinsGroup, (player, coin) => {
@@ -151,36 +185,150 @@ class Level1 extends Phaser.Scene {
         this.scoreText.setText('Score: ' + score)
       }
     })
-    // Store the score in local storage
-    localStorage.setItem('score', score)
 
     // Lasers
     this.lasers = this.physics.add.staticGroup()
-    this.lasers.create(550, 250, 'laser_blue_vert')
-    this.lasers.create(625, 240, 'laser_violet_horiz')
+    this.lasers.create(150, 85, 'laser_violet_vert')
+    this.lasers.create(210, 155, 'laser_blue_horiz')
 
-    this.lasers.create(485, 175, 'laser_blue_horiz')
+    this.lasers.create(270, 225, 'laser_blue_vert')
+    this.lasers.create(270, 350, 'laser_blue_vert')
+    this.lasers.create(75, 300, 'laser_violet_horiz')
+    this.lasers.create(210, 420, 'laser_violet_horiz')
 
-    this.lasers.create(150, 250, 'laser_violet_vert')
-    this.lasers.create(75, 240, 'laser_blue_horiz')
+    this.lasers.create(400, 400, 'laser_violet_vert')
+    this.lasers.create(400, 260, 'laser_violet_vert')
+    this.lasers.create(400, 160, 'laser_violet_vert')
+    this.lasers.create(75, 510, 'laser_violet_horiz')
 
-    this.lasers.create(350, 300, 'laser_violet_vert')
+    this.movingLaser1 = this.physics.add.sprite(150, 220, 'laser_violet_vert')
 
-    this.lasers.create(240, 500, 'laser_violet_horiz')
-    this.lasers.create(460, 500, 'laser_blue_horiz')
+    this.lasers.create(470, 460, 'laser_blue_horiz')
+    this.lasers.create(470, 200, 'laser_blue_horiz')
+    this.lasers.create(625, 330, 'laser_violet_horiz')
+    this.lasers.create(330, 510, 'laser_blue_horiz')
+    this.lasers.create(380, 90, 'laser_blue_horiz')
+    this.lasers.create(625, 90, 'laser_blue_horiz')
 
-    this.lasers.create(350, 100, 'laser_blue_horiz')
+    this.lasers.create(400, 525, 'laser_violet_vert')
 
-    this.lasers.create(215, 175, 'laser_blue_horiz')
+    this.movingLaser2 = this.physics.add.sprite(350, 330, 'laser_violet_horiz')
+    this.movingLaser3 = this.physics.add.sprite(550, 145, 'laser_violet_vert')
 
-    this.lasers.create(285, 375, 'laser_blue_horiz')
-    this.lasers.create(415, 375, 'laser_violet_horiz')
+    // Moving lasers 1 & 2
+    this.laserTween = this.tweens.add({
+      targets: [this.movingLaser1],
+      y: 355,
+      duration: 900,
+      ease: 'Linear',
+      yoyo: true,
+      repeat: -1,
+    })
+    // moving laser 3
+    this.laserTween = this.tweens.add({
+      targets: [this.movingLaser3],
+      y: 265,
+      duration: 1000,
+      ease: 'Linear',
+      yoyo: true,
+      repeat: -1,
+    })
+    this.laserTween = this.tweens.add({
+      targets: [this.movingLaser2],
+      x: 480,
+      duration: 500,
+      ease: 'Linear',
+      yoyo: true,
+      repeat: -1,
+    })
 
+    // Set up a collider for the moving laser 1 and the player
+    this.physics.add.collider(this.player, this.movingLaser1, () => {
+      window.alert('Game Over')
+      this.spacePressed = false
+      score = 0
+      this.scene.start('Level1')
+    })
+
+    // Set up a collider for the moving laser 2 and the player
+    this.physics.add.collider(this.player, this.movingLaser2, () => {
+      window.alert('Game Over')
+      this.spacePressed = false
+      score = 0
+      this.scene.start('Level1')
+    })
+
+    // Set up a collider for the moving laser 3 and the player
+    this.physics.add.collider(this.player, this.movingLaser3, () => {
+      window.alert('Game Over')
+      this.spacePressed = false
+      score = 0
+      this.scene.start('Level1')
+    })
+
+    // Set up a collider for other (static) lasers ans player
     this.physics.add.collider(this.player, this.lasers, () => {
       window.alert('Game Over')
       this.spacePressed = false
       score = 0
-      this.scene.restart()
+      this.scene.start('Level1')
+    })
+
+    // Add a timer event to blink the moving laser 1's color red every 3 seconds
+    this.time.addEvent({
+      delay: 800,
+      loop: true,
+      callback: () => {
+        // Check if the moving laser sprite exists
+        if (this.movingLaser1) {
+          // Change its tint color to red
+          this.movingLaser1.setTint(0xff0000)
+
+          // Add a short delay before changing the tint color back to the original
+          this.time.delayedCall(500, () => {
+            // Change the tint color back to the original
+            this.movingLaser1.clearTint()
+          })
+        }
+      },
+    })
+
+    // Add a timer event to blink the moving laser 2's color red every 3 seconds
+    this.time.addEvent({
+      delay: 800,
+      loop: true,
+      callback: () => {
+        // Check if the moving laser sprite exists
+        if (this.movingLaser2) {
+          // Change its tint color to red
+          this.movingLaser2.setTint(0xff0000)
+
+          // Add a short delay before changing the tint color back to the original
+          this.time.delayedCall(500, () => {
+            // Change the tint color back to the original
+            this.movingLaser2.clearTint()
+          })
+        }
+      },
+    })
+
+    // Add a timer event to blink the moving laser 3's color red every 3 seconds
+    this.time.addEvent({
+      delay: 800,
+      loop: true,
+      callback: () => {
+        // Check if the moving laser sprite exists
+        if (this.movingLaser3) {
+          // Change its tint color to red
+          this.movingLaser3.setTint(0xff0000)
+
+          // Add a short delay before changing the tint color back to the original
+          this.time.delayedCall(500, () => {
+            // Change the tint color back to the original
+            this.movingLaser3.clearTint()
+          })
+        }
+      },
     })
 
     // Add a timer event to blink the laser color red every 3 seconds
@@ -208,12 +356,13 @@ class Level1 extends Phaser.Scene {
 
     // Create bombs
     this.bombs = this.physics.add.staticGroup()
-    this.bomb1 = this.bombs.create(75, 300, 'bomb')
-    this.bomb2 = this.bombs.create(625, 300, 'bomb')
+    this.bomb1 = this.bombs.create(220, 80, 'bomb')
+    this.bomb2 = this.bombs.create(220, 300, 'bomb')
+    this.bomb3 = this.bombs.create(220, 525, 'bomb')
 
     // Make bombs blink
     this.tweens.add({
-      targets: [this.bomb1, this.bomb2],
+      targets: [this.bomb1, this.bomb2, this.bomb3],
       alpha: 0,
       ease: 'Linear',
       duration: 500,
@@ -222,36 +371,29 @@ class Level1 extends Phaser.Scene {
     })
 
     // Instructions
-    this.instructionText1 = this.add.text(
-      85,
-      110,
-      'Help Blob to get out of the maze using the portal\n before the bomb timer runs out.\nCollect as many coins as possible...',
-      {
-        fontSize: '18px',
-        fill: '#a6E3A1',
-        align: 'center',
-      }
-    )
-    this.instructionText2 = this.add
-      .text(350, 300, 'Press SPACE to play!\n LEVEL - 1', {
+    this.instructionText = this.add
+      .text(350, 300, 'Press SPACE to play!\n LEVEL - 4', {
         fontSize: '32px',
         fill: '#9d00ff',
         align: 'center',
       })
       .setFontStyle('bold')
-    this.instructionText2.setOrigin(0.5)
+    this.instructionText.setOrigin(0.5)
 
     // Create explosion sprite
     this.explosion1 = this.add.image(this.bomb1.x, this.bomb1.y, 'explosion')
     this.explosion2 = this.add.image(this.bomb2.x, this.bomb2.y, 'explosion')
+    this.explosion3 = this.add.image(this.bomb3.x, this.bomb3.y, 'explosion')
 
     // Set the anchor point to the center of the sprite
     this.explosion1.setOrigin(0.5)
     this.explosion2.setOrigin(0.5)
+    this.explosion3.setOrigin(0.5)
 
     // Hide the sprite initially
     this.explosion1.setVisible(false)
     this.explosion2.setVisible(false)
+    this.explosion3.setVisible(false)
 
     // Time bar
     this.timeLimit = 70
@@ -282,10 +424,12 @@ class Level1 extends Phaser.Scene {
       callback: () => {
         this.bomb1.destroy()
         this.bomb2.destroy()
+        this.bomb3.destroy()
 
         // Show the explosion sprite
         this.explosion1.setVisible(true)
         this.explosion2.setVisible(true)
+        this.explosion3.setVisible(true)
 
         // Trigger the alert after the explosion animation finishes
         this.time.delayedCall(2, () => {
@@ -329,8 +473,7 @@ class Level1 extends Phaser.Scene {
       this.spacePressed = true
 
       // Hide the instructions
-      this.instructionText1.setVisible(false)
-      this.instructionText2.setVisible(false)
+      this.instructionText.setVisible(false)
 
       // Pause the bomb timer
       this.timer.paused = true
@@ -338,7 +481,7 @@ class Level1 extends Phaser.Scene {
 
     // Decrease the bar fill amount if space bar is pressed
     if (this.spacePressed) {
-      this.barFillAmount -= 0.0015
+      this.barFillAmount -= 0.001
       this.bar.clear()
       this.bar.fillStyle(0x39ff14, 1)
       this.bar.fillRect(0, 0, this.barFillAmount * 200, 20)
@@ -353,4 +496,4 @@ class Level1 extends Phaser.Scene {
   }
 }
 
-this.game.scene.add('Level1', Level1, true)
+this.game.scene.add('Level4', Level4, true)
