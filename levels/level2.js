@@ -113,7 +113,7 @@ class Level2 extends Phaser.Scene {
     coinsGroup.playAnimation('spin')
 
     // Create a text object to display the score
-    this.scoreText = this.add.text(500, 20, 'Score: ' + score, {
+    this.scoreText = this.add.text(475, 20, 'Score: ' + score, {
       fontSize: '32px',
       fill: '#fff',
     })
@@ -180,21 +180,24 @@ class Level2 extends Phaser.Scene {
     this.physics.add.collider(this.player, this.movingLaser1, () => {
       window.alert('Game Over')
       this.spacePressed = false
-      this.scene.restart()
+      score = 0
+      this.scene.start('Level1')
     })
 
     // Set up a collider for the moving laser 2 and the player
     this.physics.add.collider(this.player, this.movingLaser2, () => {
       window.alert('Game Over')
       this.spacePressed = false
-      this.scene.restart()
+      score = 0
+      this.scene.start('Level1')
     })
 
     // Set up a collider for other (static) lasers ans player
     this.physics.add.collider(this.player, this.lasers, () => {
       window.alert('Game Over')
       this.spacePressed = false
-      this.scene.restart()
+      score = 0
+      this.scene.start('Level1')
     })
 
     // Add a timer event to blink the moving laser 1's color red every 3 seconds
@@ -339,7 +342,8 @@ class Level2 extends Phaser.Scene {
         this.time.delayedCall(2, () => {
           window.alert('Game Over')
           this.spacePressed = false
-          this.scene.restart()
+          score = 0
+          this.scene.start('Level1')
         })
       },
       loop: true,
