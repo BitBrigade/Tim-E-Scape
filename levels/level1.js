@@ -1,4 +1,5 @@
 let score = 0
+let bgm
 
 class Level1 extends Phaser.Scene {
   constructor() {
@@ -22,9 +23,27 @@ class Level1 extends Phaser.Scene {
       frameWidth: 192,
       frameHeight: 171,
     })
+    this.load.spritesheet('hourglass', 'assets/hourglass.png', {
+      frameWidth: 40,
+      frameHeight: 40,
+    })
+    this.load.audio('bgm', ['assets/bgm.mp3'])
   }
 
   create() {
+    bgm = this.sound.add('bgm', { loop: true })
+    bgm.play()
+
+    /*// Add event listener to pause bgm on window alert
+    window.addEventListener('alert', () => {
+      bgm.pause()
+    })
+
+    // Add event listener to resume bgm on window close
+    window.addEventListener('close', () => {
+      bgm.resume()
+    })*/
+
     // Add the background image
     this.add.image(350, 300, 'background').setScale(1.6, 1.325)
 
@@ -151,8 +170,6 @@ class Level1 extends Phaser.Scene {
         this.scoreText.setText('Score: ' + score)
       }
     })
-    // Store the score in local storage
-    localStorage.setItem('score', score)
 
     // Lasers
     this.lasers = this.physics.add.staticGroup()
