@@ -61,7 +61,7 @@ class Level4 extends Phaser.Scene {
         this.player.setVisible(false)
         this.spacePressed = false
         window.alert('Level Cleared!!\nPress OK to move to next level')
-        this.scene.start('Level3')
+        this.scene.start('Level5')
       })
     })
 
