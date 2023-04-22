@@ -1,4 +1,5 @@
 let score = 0
+let bgm
 
 class Level1 extends Phaser.Scene {
   constructor() {
@@ -22,9 +23,12 @@ class Level1 extends Phaser.Scene {
       frameWidth: 192,
       frameHeight: 171,
     })
+    this.load.audio('bgm', 'sounds/bgm.mp3')
   }
 
   create() {
+    this.bgm = this.sound.add('bgm', { loop: true })    // Background music
+
     // Add the background image
     this.add.image(350, 300, 'background').setScale(1.6, 1.325)
 
@@ -63,6 +67,7 @@ class Level1 extends Phaser.Scene {
       this.time.delayedCall(250, () => {
         this.player.setVisible(false)
         this.spacePressed = false
+        //this.bgm.stop()
         window.alert('Level Cleared!!\nPress OK to move to next level')
         this.scene.start('Level2')
       })
@@ -151,8 +156,6 @@ class Level1 extends Phaser.Scene {
         this.scoreText.setText('Score: ' + score)
       }
     })
-    // Store the score in local storage
-    localStorage.setItem('score', score)
 
     // Lasers
     this.lasers = this.physics.add.staticGroup()
@@ -180,6 +183,7 @@ class Level1 extends Phaser.Scene {
       window.alert('Game Over')
       this.spacePressed = false
       score = 0
+      //this.bgm.stop()
       this.scene.restart()
     })
 
@@ -291,6 +295,7 @@ class Level1 extends Phaser.Scene {
         this.time.delayedCall(2, () => {
           window.alert('Game Over')
           this.spacePressed = false
+          //this.bgm.stop()
           score = 0
           this.scene.start('Level1')
         })
@@ -327,13 +332,13 @@ class Level1 extends Phaser.Scene {
       this.input.keyboard.checkDown(this.input.keyboard.addKey('SPACE'), 500)
     ) {
       this.spacePressed = true
+      
+      this.bgm.stop()
+      this.bgm.play()
 
       // Hide the instructions
       this.instructionText1.setVisible(false)
       this.instructionText2.setVisible(false)
-
-      // Pause the bomb timer
-      this.timer.paused = true
     }
 
     // Decrease the bar fill amount if space bar is pressed
