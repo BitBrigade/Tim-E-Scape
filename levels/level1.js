@@ -1,5 +1,6 @@
 let score = 0
 let bgm
+let musicStarted = false
 
 class Level1 extends Phaser.Scene {
   constructor() {
@@ -27,7 +28,7 @@ class Level1 extends Phaser.Scene {
   }
 
   create() {
-    this.bgm = this.sound.add('bgm', { loop: true })    // Background music
+    this.bgm = this.sound.add('bgm', { loop: true }) // Background music
 
     // Add the background image
     this.add.image(350, 300, 'background').setScale(1.6, 1.325)
@@ -332,10 +333,13 @@ class Level1 extends Phaser.Scene {
       this.input.keyboard.checkDown(this.input.keyboard.addKey('SPACE'), 500)
     ) {
       this.spacePressed = true
-      
-      this.bgm.stop()
-      this.bgm.play()
 
+      if (!musicStarted) {
+        musicStarted = true
+        this.sound.play('bgm', {
+          loop: true,
+        })
+      }
       // Hide the instructions
       this.instructionText1.setVisible(false)
       this.instructionText2.setVisible(false)
