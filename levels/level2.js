@@ -379,9 +379,6 @@ class Level2 extends Phaser.Scene {
 
       // Hide the instructions
       this.instructionText.setVisible(false)
-
-      // Pause the bomb timer
-      this.timer.paused = true
     }
 
     // Decrease the bar fill amount if space bar is pressed
