@@ -336,10 +336,11 @@ class Level1 extends Phaser.Scene {
 
       if (!musicStarted) {
         musicStarted = true
-        this.sound.play('bgm', {
-          loop: true,
+        this.bgm.play()
+        this.bgm.on('complete', () => {
+          this.bgm.play()
         })
-      }
+      } 
       // Hide the instructions
       this.instructionText1.setVisible(false)
       this.instructionText2.setVisible(false)
