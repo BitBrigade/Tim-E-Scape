@@ -742,7 +742,7 @@ class Level5 extends Phaser.Scene {
 
     // Decrease the bar fill amount if space bar is pressed
     if (this.spacePressed) {
-      this.barFillAmount -= 0.001
+      this.barFillAmount -= 0.0005
       this.bar.clear()
       this.bar.fillStyle(0x39ff14, 1)
       this.bar.fillRect(0, 0, this.barFillAmount * 200, 20)
