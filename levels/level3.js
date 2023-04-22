@@ -20,9 +20,14 @@ class Level3 extends Phaser.Scene {
       frameWidth: 192,
       frameHeight: 171,
     })
+    this.load.image('sound-on', 'assets/sound-on.png')
+    this.load.image('sound-off', 'assets/sound-off.png')
+    this.load.audio('bgm', 'sounds/bgm.mp3')
   }
 
   create() {
+    this.bgm = this.sound.add('bgm', { loop: true }) // Background music
+
     // Add the background image
     this.add.image(350, 300, 'background').setScale(1.6, 1.325)
 
@@ -61,6 +66,8 @@ class Level3 extends Phaser.Scene {
       this.time.delayedCall(250, () => {
         this.player.setVisible(false)
         this.spacePressed = false
+        this.bgm.stop()
+        musicStarted = false
         window.alert('Level Cleared!!\nPress OK to move to next level')
         this.scene.start('Level4')
       })
@@ -214,6 +221,8 @@ class Level3 extends Phaser.Scene {
       window.alert('Game Over')
       this.spacePressed = false
       score = 0
+      this.bgm.stop()
+      musicStarted = false
       this.scene.start('Level1')
     })
 
@@ -222,6 +231,8 @@ class Level3 extends Phaser.Scene {
       window.alert('Game Over')
       this.spacePressed = false
       score = 0
+      this.bgm.stop()
+      musicStarted = false
       this.scene.start('Level1')
     })
 
@@ -230,6 +241,8 @@ class Level3 extends Phaser.Scene {
       window.alert('Game Over')
       this.spacePressed = false
       score = 0
+      this.bgm.stop()
+      musicStarted = false
       this.scene.start('Level1')
     })
 
@@ -238,6 +251,8 @@ class Level3 extends Phaser.Scene {
       window.alert('Game Over')
       this.spacePressed = false
       score = 0
+      this.bgm.stop()
+      musicStarted = false
       this.scene.start('Level1')
     })
 
@@ -384,12 +399,20 @@ class Level3 extends Phaser.Scene {
           window.alert('Game Over')
           this.spacePressed = false
           score = 0
+          this.bgm.stop()
+          musicStarted = false
           this.scene.start('Level1')
         })
       },
       loop: true,
       paused: true,
     })
+
+    // Sound Button
+    this.soundButton = this.add
+      .sprite(665, 565, 'sound-on')
+      .disableInteractive()
+    this.soundButton.on('pointerdown', this.toggleSound, this)
   }
 
   update() {
@@ -420,6 +443,17 @@ class Level3 extends Phaser.Scene {
     ) {
       this.spacePressed = true
 
+      // Start background music
+      if (!musicStarted) {
+        musicStarted = true
+        this.bgm.play()
+        this.bgm.on('complete', () => {
+          this.bgm.play()
+        })
+      }
+
+      this.soundButton.setInteractive()
+
       // Hide the instructions
       this.instructionText.setVisible(false)
 
@@ -440,6 +474,18 @@ class Level3 extends Phaser.Scene {
         this.timer.paused = false
         this.barFillAmount = 0
       }
+    }
+  }
+
+  toggleSound() {
+    if (this.bgm.isPlaying) {
+      this.bgm.stop()
+      musicStarted = false
+      this.soundButton.setTexture('sound-off')
+    } else {
+      this.bgm.play()
+      musicStarted = true
+      this.soundButton.setTexture('sound-on')
     }
   }
 }
