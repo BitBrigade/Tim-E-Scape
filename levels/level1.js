@@ -23,7 +23,7 @@ class Level1 extends Phaser.Scene {
     this.load.spritesheet('coins', 'assets/coins.png', {
       frameWidth: 192,
       frameHeight: 171,
-    })
+    })    
     this.load.audio('bgm', 'sounds/bgm.mp3')
   }
 
@@ -68,7 +68,6 @@ class Level1 extends Phaser.Scene {
       this.time.delayedCall(250, () => {
         this.player.setVisible(false)
         this.spacePressed = false
-        //this.bgm.stop()
         window.alert('Level Cleared!!\nPress OK to move to next level')
         this.scene.start('Level2')
       })
@@ -184,7 +183,6 @@ class Level1 extends Phaser.Scene {
       window.alert('Game Over')
       this.spacePressed = false
       score = 0
-      //this.bgm.stop()
       this.scene.restart()
     })
 
@@ -296,7 +294,6 @@ class Level1 extends Phaser.Scene {
         this.time.delayedCall(2, () => {
           window.alert('Game Over')
           this.spacePressed = false
-          //this.bgm.stop()
           score = 0
           this.scene.start('Level1')
         })
@@ -340,7 +337,7 @@ class Level1 extends Phaser.Scene {
         this.bgm.on('complete', () => {
           this.bgm.play()
         })
-      } 
+      }
       // Hide the instructions
       this.instructionText1.setVisible(false)
       this.instructionText2.setVisible(false)
