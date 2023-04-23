@@ -6,28 +6,6 @@ class Level1 extends Phaser.Scene {
     super({ key: 'Level1' })
   }
 
-  preload() {
-    this.load.image('background', 'assets/background.png')
-    this.load.spritesheet('blob', 'assets/blob.png', {
-      frameWidth: 24,
-      frameHeight: 24,
-    })
-    this.load.image('portal', 'assets/portal.png')
-    this.load.image('laser_blue_vert', 'assets/laser_blue_vert.png')
-    this.load.image('laser_blue_horiz', 'assets/laser_blue_horiz.png')
-    this.load.image('laser_violet_vert', 'assets/laser_violet_vert.png')
-    this.load.image('laser_violet_horiz', 'assets/laser_violet_horiz.png')
-    this.load.image('bomb', 'assets/bomb.png')
-    this.load.image('explosion', 'assets/explosion.png')
-    this.load.spritesheet('coins', 'assets/coins.png', {
-      frameWidth: 192,
-      frameHeight: 171,
-    })
-    this.load.image('sound-on', 'assets/sound-on.png')
-    this.load.image('sound-off', 'assets/sound-off.png')
-    this.load.audio('bgm', 'sounds/bgm.mp3')
-  }
-
   create() {
     this.bgm = this.sound.add('bgm', { loop: true }) // Background music
 
@@ -180,7 +158,7 @@ class Level1 extends Phaser.Scene {
     this.lasers.create(215, 175, 'laser_blue_horiz')
 
     this.lasers.create(285, 375, 'laser_blue_horiz')
-    this.lasers.create(415, 375, 'laser_violet_horiz')
+    this.lasers.create(415, 375, 'laser_blue_horiz')
 
     this.physics.add.collider(this.player, this.lasers, () => {
       window.alert('Game Over')
