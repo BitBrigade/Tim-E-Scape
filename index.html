@@ -1,30 +1,42 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"></script>
-    <script src="scenes/loadingScene.js"></script>
-    <script src="scenes/level1.js"></script>
-    <script src="scenes/level2.js"></script>
-    <script src="scenes/level3.js"></script>
-    <script src="scenes/level4.js"></script>
-    <script src="scenes/level5.js"></script>
-  </head>
-  <body>
-    <script>
-      // Game config
-      var config = {
-        type: Phaser.AUTO, // sets type automatically to WEBGL; falls back to CANVAS if WEBGL is not supported
-        width: 700,
-        height: 600,
 
-        // Game physics
-        physics: {
-          default: 'arcade', // physics system
-          arcade: {},
-        },
-        scene: [loadingScene, Level1, Level2, Level3, Level4, Level5],
-      }
-      var game = new Phaser.Game(config)
-    </script>
-  </body>
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"></script>
+  <script src="scenes/loadingScene.js"></script>
+  <script src="scenes/level1.js"></script>
+  <script src="scenes/level2.js"></script>
+  <script src="scenes/level3.js"></script>
+  <script src="scenes/level4.js"></script>
+  <script src="scenes/level5.js"></script>
+  <script src="scenes/endingScene.js"></script>
+</head>
+
+<body>
+  <script>
+    // Game config
+    var config = {
+      type: Phaser.AUTO, // sets type automatically to WEBGL; falls back to CANVAS if WEBGL is not supported
+      width: 700,
+      height: 600,
+
+      // Game physics
+      physics: {
+        default: 'arcade', // physics system
+        arcade: {},
+      },
+      scene: [
+        endingScene,
+        Level1,
+        Level2,
+        Level3,
+        Level4,
+        Level5,
+        loadingScene,
+      ],
+    }
+    var game = new Phaser.Game(config)
+  </script>
+</body>
+
 </html>
