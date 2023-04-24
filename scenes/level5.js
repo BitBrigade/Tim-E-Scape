@@ -50,7 +50,7 @@ class Level5 extends Phaser.Scene {
         this.bgm.stop()
         musicStarted = false
         window.alert('YOU WIN!!')
-        this.scene.start('Level1')
+        this.scene.start('endingScene')
       })
     })
 
