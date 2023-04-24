@@ -41,6 +41,9 @@ class Level2 extends Phaser.Scene {
       this.player.active = false // set player to inactive so it doesn't move anymore
       this.player.setPosition(this.portal.x, this.portal.y)
       this.player.setScale(0.5) // set the scale of the blob to half of its original size
+      this.sound.play('teleport', {
+        mute: !musicStarted,
+      })
       this.time.delayedCall(250, () => {
         this.player.setVisible(false)
         this.spacePressed = false
@@ -118,6 +121,10 @@ class Level2 extends Phaser.Scene {
         // Remove the coin from the game
         coin.destroy()
 
+        this.sound.play('collect-coin', {
+          mute: !musicStarted,
+        })
+
         // Update the score
         score += 10
         this.scoreText.setText('Score: ' + score)
@@ -160,6 +167,9 @@ class Level2 extends Phaser.Scene {
 
     // Set up a collider for the moving laser 1 and the player
     this.physics.add.collider(this.player, this.movingLaser1, () => {
+      this.sound.play('zap', {
+        mute: !musicStarted,
+      })
       window.alert('Game Over')
       this.spacePressed = false
       score = 0
@@ -170,6 +180,9 @@ class Level2 extends Phaser.Scene {
 
     // Set up a collider for the moving laser 2 and the player
     this.physics.add.collider(this.player, this.movingLaser2, () => {
+      this.sound.play('zap', {
+        mute: !musicStarted,
+      })
       window.alert('Game Over')
       this.spacePressed = false
       score = 0
@@ -180,6 +193,9 @@ class Level2 extends Phaser.Scene {
 
     // Set up a collider for other (static) lasers ans player
     this.physics.add.collider(this.player, this.lasers, () => {
+      this.sound.play('zap', {
+        mute: !musicStarted,
+      })
       window.alert('Game Over')
       this.spacePressed = false
       score = 0
@@ -328,11 +344,14 @@ class Level2 extends Phaser.Scene {
 
         // Trigger the alert after the explosion animation finishes
         this.time.delayedCall(2, () => {
+          this.sound.play('explode', {
+            mute: !musicStarted,
+          })
+          this.bgm.stop()
+          musicStarted = false
           window.alert('Game Over')
           this.spacePressed = false
           score = 0
-          this.bgm.stop()
-          musicStarted = false
           this.scene.start('Level1')
         })
       },
@@ -341,9 +360,12 @@ class Level2 extends Phaser.Scene {
     })
 
     // Sound Button
-    this.soundButton = this.add
-      .sprite(665, 565, 'sound-on')
-      .disableInteractive()
+    if (soundButtonOn) {
+      this.soundButton = this.add.sprite(665, 565, 'sound-on')
+    } else {
+      this.soundButton = this.add.sprite(665, 565, 'sound-off')
+    }
+    this.soundButton.disableInteractive()
     this.soundButton.on('pointerdown', this.toggleSound, this)
   }
 
@@ -376,7 +398,7 @@ class Level2 extends Phaser.Scene {
       this.spacePressed = true
 
       // Start background music
-      if (!musicStarted) {
+      if (!musicStarted && soundButtonOn) {
         musicStarted = true
         this.bgm.play()
         this.bgm.on('complete', () => {
@@ -409,10 +431,12 @@ class Level2 extends Phaser.Scene {
   toggleSound() {
     if (this.bgm.isPlaying) {
       this.bgm.stop()
+      soundButtonOn = false
       musicStarted = false
       this.soundButton.setTexture('sound-off')
     } else {
       this.bgm.play()
+      soundButtonOn = true
       musicStarted = true
       this.soundButton.setTexture('sound-on')
     }
