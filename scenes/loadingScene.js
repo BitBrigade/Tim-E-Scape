@@ -28,6 +28,10 @@ class loadingScene extends Phaser.Scene {
     this.load.image('sound-on', 'assets/sound-on.png')
     this.load.image('sound-off', 'assets/sound-off.png')
     this.load.audio('bgm', 'sounds/bgm.mp3')
+    this.load.audio('zap', 'sounds/zap.mp3')
+    this.load.audio('explode', 'sounds/explode.mp3')
+    this.load.audio('collect-coin', 'sounds/collect-coin.mp3')
+    this.load.audio('teleport', 'sounds/teleport.mp3')
   }
 
   create() {
