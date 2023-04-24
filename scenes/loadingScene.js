@@ -25,6 +25,8 @@ class loadingScene extends Phaser.Scene {
       frameWidth: 192,
       frameHeight: 171,
     })
+    this.load.image('phaser', 'assets/phaser.png')
+
     this.load.image('sound-on', 'assets/sound-on.png')
     this.load.image('sound-off', 'assets/sound-off.png')
     this.load.audio('bgm', 'sounds/bgm.mp3')
@@ -147,14 +149,10 @@ class loadingScene extends Phaser.Scene {
       },
     })
 
-    this.add.text(250, 450, '𝕋𝕚𝕞-𝔼-𝕊𝕔𝕒𝕡𝕖', {
-      fontSize: '32px',
-      fill: '#7B32FA',
-    })
-    this.add.text(200, 480, 'Escape before Time runs out!!!', {
-      fontSize: '18px',
-      fill: '#ff0000'
+    this.add.text(290, 350, 'Made using', {
+      fontSize: '22px',
+      fill: '#fff'
     }).setFontStyle('bold')
-
+    this.add.image(350, 480, 'phaser').setScale(0.5)
   }
 }

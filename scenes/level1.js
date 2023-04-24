@@ -283,13 +283,14 @@ class Level1 extends Phaser.Scene {
         this.explosion1.setVisible(true)
         this.explosion2.setVisible(true)
 
-        // Trigger the alert after the explosion animation finishes
-        this.time.delayedCall(2, () => {
-          this.sound.play('explode', {
+        this.sound.play('explode', {
             mute: !musicStarted,
           })
           this.bgm.stop()
           musicStarted = false
+
+        // Trigger the alert after the explosion animation finishes
+        this.time.delayedCall(2, () => {
           window.alert('Game Over')
           this.spacePressed = false
           score = 0
