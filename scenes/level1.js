@@ -351,7 +351,8 @@ class Level1 extends Phaser.Scene {
       this.soundButton.setInteractive()
 
       // Hide the instructions
-      this.instructionText.setVisible(false)
+      this.instructionText1.setVisible(false)
+      this.instructionText2.setVisible(false)
     }
 
     // Decrease the bar fill amount if space bar is pressed
