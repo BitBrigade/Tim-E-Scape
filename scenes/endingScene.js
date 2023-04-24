@@ -3,39 +3,6 @@ class endingScene extends Phaser.Scene {
     super({ key: 'endingScene' })
   }
 
-  preload() {
-    // Load assets for the game
-    this.load.image('background', 'assets/background.png')
-    this.load.spritesheet('loading', 'assets/loading.png', {
-      frameWidth: 66,
-      frameHeight: 66,
-    })
-    this.load.spritesheet('blob', 'assets/blob.png', {
-      frameWidth: 24,
-      frameHeight: 24,
-    })
-    this.load.image('portal', 'assets/portal.png')
-    this.load.image('laser_blue_vert', 'assets/laser_blue_vert.png')
-    this.load.image('laser_blue_horiz', 'assets/laser_blue_horiz.png')
-    this.load.image('laser_violet_vert', 'assets/laser_violet_vert.png')
-    this.load.image('laser_violet_horiz', 'assets/laser_violet_horiz.png')
-    this.load.image('bomb', 'assets/bomb.png')
-    this.load.image('explosion', 'assets/explosion.png')
-    this.load.spritesheet('coins', 'assets/coins.png', {
-      frameWidth: 192,
-      frameHeight: 171,
-    })
-    this.load.image('phaser', 'assets/phaser.png')
-
-    this.load.image('sound-on', 'assets/sound-on.png')
-    this.load.image('sound-off', 'assets/sound-off.png')
-    this.load.audio('bgm', 'sounds/bgm.mp3')
-    this.load.audio('zap', 'sounds/zap.mp3')
-    this.load.audio('explode', 'sounds/explode.mp3')
-    this.load.audio('collect-coin', 'sounds/collect-coin.mp3')
-    this.load.audio('teleport', 'sounds/teleport.mp3')
-  }
-
   create() {
     // Add credits text
     this.add
