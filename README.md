@@ -35,7 +35,7 @@ git clone https://github.com/BitBrigade/gamedevjs-2023
 npm install && npm i -g http-server
 ```
 
-### Running the Game (Play wihtout Build)
+### Running the Game
 
 - Without Building:
 
