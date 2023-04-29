@@ -24,7 +24,7 @@ class Level4 extends Phaser.Scene {
     this.portalCollider.setPosition(this.portal.x, this.portal.y)
 
     // Create the player sprite
-    this.player = this.physics.add.sprite(73, 50, 'blob')
+    this.player = this.physics.add.sprite(630, 500, 'blob')
 
     // Set the player's drag to control its movement
     this.player.setDrag(1000)
@@ -42,7 +42,7 @@ class Level4 extends Phaser.Scene {
       this.player.setPosition(this.portal.x, this.portal.y)
       this.player.setScale(0.5) // set the scale of the blob to half of its original size
       this.sound.play('teleport', {
-        mute: !musicstarted,
+        mute: !musicStarted,
       })
       this.time.delayedCall(250, () => {
         this.player.setVisible(false)
@@ -409,7 +409,7 @@ class Level4 extends Phaser.Scene {
     this.explosion3.setVisible(false)
 
     // Time bar
-    this.timeLimit = 70
+    this.timeLimit = 100
     this.timer = this.time.addEvent({
       delay: 1000,
       callback: this.updateTimer,
