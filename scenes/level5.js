@@ -713,7 +713,7 @@ class Level5 extends Phaser.Scene {
 
     // Explosion
     this.timer = this.time.addEvent({
-      delay: 1000, // in ms
+      delay: 1400, // in ms
       callback: () => {
         this.bomb1.destroy()
         this.bomb2.destroy()
