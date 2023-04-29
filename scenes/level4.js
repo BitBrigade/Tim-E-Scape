@@ -24,7 +24,7 @@ class Level4 extends Phaser.Scene {
     this.portalCollider.setPosition(this.portal.x, this.portal.y)
 
     // Create the player sprite
-    this.player = this.physics.add.sprite(630, 500, 'blob')
+    this.player = this.physics.add.sprite(70, 50, 'blob')
 
     // Set the player's drag to control its movement
     this.player.setDrag(1000)
@@ -409,9 +409,9 @@ class Level4 extends Phaser.Scene {
     this.explosion3.setVisible(false)
 
     // Time bar
-    this.timeLimit = 100
+    this.timeLimit = 70
     this.timer = this.time.addEvent({
-      delay: 1000,
+      delay: 1200,
       callback: this.updateTimer,
       callbackScope: this,
       loop: true,
