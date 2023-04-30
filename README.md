@@ -8,6 +8,7 @@ Our game for gamedev.js jam 2023 <br>
 - [Getting Started](#getting-started)
 - [Running the Game](#running-the-game)
 - [Built With](#built-with)
+- [How To Play?](#how-to-play)
 - [Authors](#authors)
 - [License](#license)
 
@@ -57,6 +58,14 @@ https://bitbrigade.github.io/Tim-E-Scape/
   - Open your web browser and navigate to `http://localhost:8081` (replace 8081 with whatever port number you get)
 
   - You should now see the game's index.html page displayed in your browser.
+
+## How To Play?
+
+1. Use the arrow keys to move the blob.
+2. Avoid the lasers.
+3. Escape using the portal before bomb timer runs out.
+
+https://user-images.githubusercontent.com/106669732/235342611-1a165ced-fcd4-4ec1-a163-5abb3c923ea1.mp4
 
 ## Built With
 
