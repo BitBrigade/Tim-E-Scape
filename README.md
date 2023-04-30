@@ -2,7 +2,7 @@
 
 <h4 align="center"> 
   Our game for gamedev.js jam 2023 <br>
-  *(Theme : TIME)*
+  (Theme : TIME)
 </h4>
 
 <h3 align="center" >
