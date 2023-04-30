@@ -1,7 +1,19 @@
-# ⏳ Tim-E-Scape ⌛ 
+<h1 align="center"> ⏳ Tim-E-Scape ⌛ </h1>
 
-Our game for gamedev.js jam 2023 <br>
-*(Theme : TIME)*
+<h4 align="center"> 
+  Our game for gamedev.js jam 2023 <br>
+  *(Theme : TIME)*
+</h4>
+
+<h3 align="center" >
+  <a href="https://sumitst05.itch.io/tim-e-scape"><img alt="play at: sumitst05.itch.io" src="https://img.shields.io/badge/play%20at-sumitst05.itch.io-brightgreen?style=for-the-badge"></a>
+  <br>
+  <img alt="Status: Released" src="https://img.shields.io/badge/status-released 1.0.0-red?style=for-the-badge">
+  <br><br>
+  <h6 align="center" style="padding-top:5px; margin-top:0; margin-bottom:2em">
+    A small and simple maze game:<br>Help the blob escape the maze using the portal before the bomb timer runs out!
+  </h6>
+</h3>
 
 ## Table of Contents
 
