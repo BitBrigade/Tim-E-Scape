@@ -1,0 +1,38 @@
+name: Format Code
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Format JavaScript
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - run: npm install --global prettier
+      - run: prettier --write '**/*.js'
+
+      - name: Format HTML
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - run: npm install --global prettier
+      - run: prettier --write '**/*.html'
+
+      - name: Format CSS
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - run: npm install --global prettier
+      - run: prettier --write '**/*.css'
