@@ -1,5 +1,5 @@
 class endingScene extends Phaser.Scene {
-  constructor() {
+                                                  constructor() {
     super({ key: 'endingScene' })
   }
 
