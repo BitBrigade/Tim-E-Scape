@@ -30,14 +30,7 @@ jobs:
       - run: npm install --global prettier
       - run: prettier --write '**/*.html'
 
-      - name: Commit changes
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add .
-          git commit -m "Format code" || true
-
-      - name: Push changes
-        uses: ad-m/github-push-action@v0.6.0
+      - name: Commit and Push Changes
+        uses: actions-js/push@v1.4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
