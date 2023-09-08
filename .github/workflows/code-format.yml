@@ -30,13 +30,6 @@ jobs:
       - run: npm install --global prettier
       - run: prettier --write '**/*.html'
 
-      - name: Format CSS
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - run: npm install --global prettier
-      - run: prettier --write '**/*.css'
-
       - name: Commit changes
         run: |
           git config --local user.email "action@github.com"
