@@ -36,3 +36,15 @@ jobs:
           fetch-depth: 0
       - run: npm install --global prettier
       - run: prettier --write '**/*.css'
+
+      - name: Commit changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "Format code" || true
+
+      - name: Push changes
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
