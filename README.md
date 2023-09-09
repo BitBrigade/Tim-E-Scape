@@ -52,10 +52,10 @@ npm install && npm i -g http-server
 
 - Without Building:
 
-  You can play the game online by visiting the following link:
+The game is deployed to Vercel so you can play the game online by visiting the following link:
 
 ```bash
-https://bitbrigade.github.io/Tim-E-Scape/
+https://tim-e-scape.vercel.app/
 ```
 
 - Building from source:
@@ -70,6 +70,20 @@ https://bitbrigade.github.io/Tim-E-Scape/
   - Open your web browser and navigate to `http://localhost:8081` (replace 8081 with whatever port number you get)
 
   - You should now see the game's index.html page displayed in your browser.
+
+**or**
+
+- You can just build the docker image by the dockerfile provided in the repo by doing:
+
+```sh
+docker buildx . -t timeescape
+```
+
+- and then run the game by doing:
+
+```sh
+docker run -it time-escape
+```
 
 ## How To Play?
 
