@@ -3,10 +3,10 @@ name: Format Code
 on:
   push:
     branches:
-      - main
+      - developement
   pull_request:
     branches:
-      - main
+      - developement
 
 jobs:
   format:
