@@ -2,9 +2,9 @@ name: Tim-E-scape CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "developement" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "developement" ]
 
 jobs:
 
