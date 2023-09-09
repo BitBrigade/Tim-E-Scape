@@ -1,18 +1,17 @@
+---
 name: Tim-E-scape CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ['main', 'developement']
   pull_request:
-    branches: [ "main" ]
+    branches: ['main', 'developement']
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag tim-e-scape:$(date +%s)
+      - uses: actions/checkout@v3
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag tim-e-scape:"$(date +%s)"
