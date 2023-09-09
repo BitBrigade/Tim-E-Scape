@@ -1,7 +1,7 @@
 let score = 0
 let musicStarted = false, soundButtonOn = true
 
-class Level1 extends Phaser.Scene {
+                                            class Level1 extends Phaser.Scene {
   constructor() {
     super({ key: 'Level1' })
   }
