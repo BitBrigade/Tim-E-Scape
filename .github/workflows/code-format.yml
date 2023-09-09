@@ -1,37 +1,39 @@
-name: Format Code
+name: Lint Code Base
 
 on:
-  push:
-    branches:
-      - developement
-  pull_request:
-    branches:
-      - developement
+  workflow_dispatch:
 
+  push:
+    branches-ignore: [master, main]
+  pull_request:
+    branches: [master, main]
+
+###############
+# Set the Job #
+###############
 jobs:
-  format:
+  build:
+    # Name the Job
+    name: Lint Code Base
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+      packages: read
+      statuses: write
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Format JavaScript
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16'
-      - run: npm install --global prettier
-      - run: prettier --write '**/*.js'
-
-      - name: Format HTML
-        uses: actions/checkout@v2
+      - name: Checkout Code
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - run: npm install --global prettier
-      - run: prettier --write '**/*.html'
 
-      - name: Commit and Push Changes
-        uses: actions-js/push@v1.4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          message: 'Formatted the code'
+      ################################
+      # Run Linter against code base #
+      ################################
+      - name: Lint Code Base
+        uses: super-linter/super-linter/slim@v5
+        env:
+          VALIDATE_ALL_CODEBASE: false
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
