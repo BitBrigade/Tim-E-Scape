@@ -76,7 +76,7 @@ https://tim-e-scape.vercel.app/
 - You can just build the docker image by the dockerfile provided in the repo by doing:
 
 ```sh
-docker buildx . -t timeescape
+docker build . -t timeescape
 ```
 
 - and then run the game by doing:
