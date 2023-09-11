@@ -12,6 +12,7 @@
   <br><br>
   <h6 align="center" style="padding-top:5px; margin-top:0; margin-bottom:2em">
     A small and simple maze game:<br>Help the blob escape the maze using the portal before the bomb timer runs out!
+    
   </h6>
 </h3>
 
