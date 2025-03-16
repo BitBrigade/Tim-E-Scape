@@ -4,5 +4,5 @@ RUN npm install -g http-server
 COPY package*.json ./
 RUN npm install
 COPY . .
-EXPOSE 8081
+EXPOSE 8080
 CMD ["http-server", "-p", "8081", "/app"]
